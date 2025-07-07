@@ -1,538 +1,677 @@
+"use client"
+
+import type React from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import {
-  MapPin,
   Phone,
   Mail,
+  MapPin,
   Clock,
   Send,
-  MessageSquare,
   Users,
-  Building,
+  Heart,
+  Shield,
+  CheckCircle,
+  AlertCircle,
   Globe,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
+  Calendar,
+  MessageSquare,
+  Building,
   ArrowRight,
 } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    organization: "",
+    subject: "",
+    message: "",
+    priority: "normal",
+  })
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required"
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required"
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required"
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address"
+    }
+    if (!formData.subject) newErrors.subject = "Please select a subject"
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required"
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters long"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }))
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!validateForm()) return
+
+    setIsSubmitting(true)
+
+    try {
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      setSubmitStatus("success")
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        organization: "",
+        subject: "",
+        message: "",
+        priority: "normal",
+      })
+    } catch (error) {
+      setSubmitStatus("error")
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const scrollToContact = () => {
+    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  if (submitStatus === "success") {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <Card className="max-w-lg w-full shadow-xl">
+          <CardContent className="p-8 text-center">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="h-10 w-10 text-green-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Message Sent Successfully!</h2>
+            <p className="text-gray-600 mb-8 leading-relaxed">
+              Thank you for reaching out to ESPA. We have received your message and will respond within 24 hours during
+              business days.
+            </p>
+            <Button
+              onClick={() => setSubmitStatus("idle")}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2"
+            >
+              Send Another Message
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800 py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="mx-auto max-w-4xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl mb-6">Get in Touch</h1>
-            <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
-              We're here to answer your questions, discuss partnerships, and explore how we can work together to advance
-              human rights and democracy in Ethiopia
+      <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 text-white overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 opacity-30">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%239C92AC' fillOpacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          ></div>
+        </div>
+
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-32 h-32 bg-purple-400/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-blue-400/20 rounded-full blur-xl animate-pulse delay-500"></div>
+
+        <div className="relative z-10 container mx-auto px-4 py-20 lg:py-32">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Badge */}
+            <Badge className="mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30 transition-colors">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Contact ESPA
+            </Badge>
+
+            {/* Main Heading */}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              {"Let's Work Together for"}
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">
+                Democratic Change
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Reach out to ESPA for advocacy support, partnership opportunities, or to report human rights concerns.
+              We're here to listen and act for a better Ethiopia.
             </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-yellow-300">24hr</div>
+                <div className="text-blue-200">Response Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-yellow-300">15+</div>
+                <div className="text-blue-200">Years Experience</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-yellow-300">1000+</div>
+                <div className="text-blue-200">Lives Impacted</div>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary">
-                <MessageSquare className="mr-2 h-5 w-5" />
+              <Button
+                onClick={scrollToContact}
+                size="lg"
+                className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300"
+              >
+                <Send className="w-5 h-5 mr-2" />
                 Send Message
               </Button>
               <Button
-                size="lg"
                 variant="outline"
-                className="bg-white text-purple-600 border-white hover:bg-purple-50 hover:text-purple-700"
+                size="lg"
+                className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-4 text-lg transition-all duration-300 bg-transparent"
               >
-                <Phone className="mr-2 h-5 w-5" />
-                Schedule Call
+                <Phone className="w-5 h-5 mr-2" />
+                Call Us Now
               </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Wave Transition */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-16 fill-white">
+            <path
+              d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"
+              opacity=".25"
+            ></path>
+            <path
+              d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z"
+              opacity=".5"
+            ></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z"></path>
+          </svg>
+        </div>
+      </section>
+
+      {/* Main Contact Section */}
+      <section id="contact-form" className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Choose how you'd like to connect with us. We're here to listen and help build a better Ethiopia.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              {/* Contact Form */}
+              <div className="lg:col-span-2">
+                <Card className="shadow-xl border-0 bg-white">
+                  <CardContent className="p-8">
+                    <div className="flex items-center space-x-3 mb-8">
+                      <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                        <Send className="h-6 w-6 text-blue-600" />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-900">Send us a message</h3>
+                        <p className="text-gray-600">We'll get back to you within 24 hours</p>
+                      </div>
+                    </div>
+
+                    {submitStatus === "error" && (
+                      <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center">
+                        <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
+                        <span className="text-red-800">
+                          Sorry, there was an error sending your message. Please try again or call us directly.
+                        </span>
+                      </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      {/* Name Fields */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="text-sm font-medium text-gray-700 mb-2 block">
+                            First Name <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            placeholder="Enter your first name"
+                            value={formData.firstName}
+                            onChange={(e) => handleInputChange("firstName", e.target.value)}
+                            className={`h-12 ${errors.firstName ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-blue-500"}`}
+                          />
+                          {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-700 mb-2 block">
+                            Last Name <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            placeholder="Enter your last name"
+                            value={formData.lastName}
+                            onChange={(e) => handleInputChange("lastName", e.target.value)}
+                            className={`h-12 ${errors.lastName ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-blue-500"}`}
+                          />
+                          {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
+                        </div>
+                      </div>
+
+                      {/* Contact Information */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="text-sm font-medium text-gray-700 mb-2 block">
+                            Email Address <span className="text-red-500">*</span>
+                          </label>
+                          <Input
+                            type="email"
+                            placeholder="your.email@example.com"
+                            value={formData.email}
+                            onChange={(e) => handleInputChange("email", e.target.value)}
+                            className={`h-12 ${errors.email ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-blue-500"}`}
+                          />
+                          {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-700 mb-2 block">Phone Number</label>
+                          <Input
+                            type="tel"
+                            placeholder="+251 XXX XXX XXX"
+                            value={formData.phone}
+                            onChange={(e) => handleInputChange("phone", e.target.value)}
+                            className="h-12 border-gray-200 focus:border-blue-500"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Organization and Priority */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <label className="text-sm font-medium text-gray-700 mb-2 block">Organization</label>
+                          <Input
+                            placeholder="Your organization (optional)"
+                            value={formData.organization}
+                            onChange={(e) => handleInputChange("organization", e.target.value)}
+                            className="h-12 border-gray-200 focus:border-blue-500"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-700 mb-2 block">Priority Level</label>
+                          <Select
+                            value={formData.priority}
+                            onValueChange={(value) => handleInputChange("priority", value)}
+                          >
+                            <SelectTrigger className="h-12 border-gray-200 focus:border-blue-500">
+                              <SelectValue placeholder="Select priority" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="normal">Normal</SelectItem>
+                              <SelectItem value="urgent">Urgent</SelectItem>
+                              <SelectItem value="emergency">Emergency</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      {/* Subject */}
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Subject <span className="text-red-500">*</span>
+                        </label>
+                        <Select value={formData.subject} onValueChange={(value) => handleInputChange("subject", value)}>
+                          <SelectTrigger
+                            className={`h-12 ${errors.subject ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-blue-500"}`}
+                          >
+                            <SelectValue placeholder="What is this regarding?" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="general">General Inquiry</SelectItem>
+                            <SelectItem value="partnership">Partnership Opportunity</SelectItem>
+                            <SelectItem value="volunteer">Volunteer with ESPA</SelectItem>
+                            <SelectItem value="training">Training & Capacity Building</SelectItem>
+                            <SelectItem value="advocacy">Advocacy & Human Rights</SelectItem>
+                            <SelectItem value="research">Research Collaboration</SelectItem>
+                            <SelectItem value="media">Media & Press</SelectItem>
+                            <SelectItem value="emergency">Emergency/Human Rights Violation</SelectItem>
+                            <SelectItem value="support">Technical Support</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
+                      </div>
+
+                      {/* Message */}
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Message <span className="text-red-500">*</span>
+                        </label>
+                        <Textarea
+                          placeholder="Please provide details about your inquiry, concern, or request for support..."
+                          rows={6}
+                          value={formData.message}
+                          onChange={(e) => handleInputChange("message", e.target.value)}
+                          className={`${errors.message ? "border-red-500 focus:border-red-500" : "border-gray-200 focus:border-blue-500"}`}
+                        />
+                        <div className="flex justify-between items-center mt-2">
+                          {errors.message ? (
+                            <p className="text-red-500 text-sm">{errors.message}</p>
+                          ) : (
+                            <p className="text-gray-500 text-sm">Minimum 10 characters required</p>
+                          )}
+                          <span className="text-sm text-gray-400">{formData.message.length}/1000</span>
+                        </div>
+                      </div>
+
+                      {/* Submit Button */}
+                      <div className="pt-4">
+                        <Button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white h-12 text-base font-semibold"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              Sending Message...
+                            </>
+                          ) : (
+                            <>
+                              Send Message
+                              <Send className="h-4 w-4 ml-2" />
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Contact Information Sidebar */}
+              <div className="space-y-8">
+                {/* Contact Details */}
+                <Card className="shadow-lg border-0 bg-white">
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-3 mb-6">
+                      <Building className="h-5 w-5 text-blue-600" />
+                      <h3 className="text-xl font-bold text-gray-900">Contact Information</h3>
+                    </div>
+
+                    <div className="space-y-6">
+                      <div className="flex items-start space-x-4">
+                        <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                          <Mail className="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-900 mb-1">Email Address</h4>
+                          <p className="text-gray-700 font-medium">info@espa-ethiopia.org</p>
+                          <p className="text-gray-500 text-sm mt-1">Response within 24 hours</p>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-gray-100 pt-6">
+                        <div className="flex items-start space-x-4">
+                          <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <Phone className="h-6 w-6 text-green-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-gray-900 mb-1">Phone Number</h4>
+                            <p className="text-gray-700 font-medium">+251 11 123 4567</p>
+                            <p className="text-gray-500 text-sm mt-1">Mon-Fri, 8:00 AM - 5:00 PM EAT</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-gray-100 pt-6">
+                        <div className="flex items-start space-x-4">
+                          <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <MapPin className="h-6 w-6 text-purple-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-gray-900 mb-1">Office Location</h4>
+                            <p className="text-gray-700">
+                              Bole Sub City, Woreda 03
+                              <br />
+                              House No. 123
+                              <br />
+                              Addis Ababa, Ethiopia
+                            </p>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="mt-2 p-0 h-auto text-blue-600 hover:text-blue-700"
+                            >
+                              Get Directions <ArrowRight className="h-3 w-3 ml-1" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Office Hours */}
+                <Card className="shadow-lg border-0 bg-white">
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-3 mb-6">
+                      <Clock className="h-5 w-5 text-green-600" />
+                      <h3 className="text-xl font-bold text-gray-900">Office Hours</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-700">Monday - Friday</span>
+                        <div className="text-right">
+                          <div className="font-medium text-gray-900">8:00 AM - 5:00 PM</div>
+                          <Badge className="bg-green-100 text-green-800 text-xs mt-1">Open</Badge>
+                        </div>
+                      </div>
+                      <div className="border-t border-gray-100 pt-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-700">Saturday</span>
+                          <div className="text-right">
+                            <div className="font-medium text-gray-900">9:00 AM - 1:00 PM</div>
+                            <Badge className="bg-green-100 text-green-800 text-xs mt-1">Open</Badge>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="border-t border-gray-100 pt-4">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-700">Sunday</span>
+                          <div className="text-right">
+                            <div className="text-gray-500">Closed</div>
+                            <Badge variant="secondary" className="text-xs mt-1">
+                              Closed
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Emergency Contact */}
+                <Card className="shadow-lg border-0 bg-gradient-to-br from-red-50 to-orange-50 border-red-100">
+                  <CardContent className="p-6 text-center">
+                    <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Shield className="h-8 w-8 text-red-600" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Emergency Hotline</h4>
+                    <p className="text-sm text-gray-600 mb-4">
+                      For urgent human rights violations or emergency situations requiring immediate attention.
+                    </p>
+                    <div className="space-y-2 mb-4">
+                      <p className="font-semibold text-red-900">24/7 Hotline</p>
+                      <p className="text-red-800">+251 90 000 0000</p>
+                    </div>
+                    <Button className="bg-red-600 hover:bg-red-700 text-white w-full">
+                      <Phone className="h-4 w-4 mr-2" />
+                      Call Emergency Line
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {/* Quick Links */}
+                <Card className="shadow-lg border-0 bg-white">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Links</h3>
+                    <div className="space-y-3">
+                      <a
+                        href="/volunteer"
+                        className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Users className="w-4 h-4 mr-2" />
+                        Volunteer with Us
+                      </a>
+                      <a
+                        href="/programs"
+                        className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Heart className="w-4 h-4 mr-2" />
+                        Our Programs
+                      </a>
+                      <a
+                        href="/resources"
+                        className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Globe className="w-4 h-4 mr-2" />
+                        Resources
+                      </a>
+                      <a
+                        href="/events"
+                        className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Upcoming Events
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Information */}
-      <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-            {/* Contact Form */}
-            <div>
-              <div className="mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Send us a Message</h2>
-                <p className="text-lg text-gray-600">
-                  Fill out the form below and we'll get back to you within 24 hours
-                </p>
-              </div>
-
-              <Card className="border-0 shadow-xl">
-                <CardHeader>
-                  <CardTitle>Contact Form</CardTitle>
-                  <CardDescription>
-                    Please provide as much detail as possible so we can assist you effectively
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">First Name *</label>
-                      <Input placeholder="Your first name" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-gray-700 mb-2 block">Last Name *</label>
-                      <Input placeholder="Your last name" />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">Email Address *</label>
-                    <Input type="email" placeholder="your.email@example.com" />
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">Phone Number</label>
-                    <Input placeholder="+251 XXX XXX XXX" />
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">Organization (Optional)</label>
-                    <Input placeholder="Your organization name" />
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">Subject *</label>
-                    <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
-                      <option value="">Select a subject</option>
-                      <option value="general">General Inquiry</option>
-                      <option value="partnership">Partnership Opportunity</option>
-                      <option value="volunteer">Volunteer Interest</option>
-                      <option value="media">Media Inquiry</option>
-                      <option value="donation">Donation Information</option>
-                      <option value="program">Program Information</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">Message *</label>
-                    <Textarea
-                      rows={6}
-                      placeholder="Please describe your inquiry in detail..."
-                      className="resize-none"
-                    />
-                  </div>
-
-                  <div className="flex items-start space-x-2">
-                    <input type="checkbox" id="newsletter" className="mt-1" />
-                    <label htmlFor="newsletter" className="text-sm text-gray-600">
-                      I would like to receive updates about ESPA's work and programs
-                    </label>
-                  </div>
-
-                  <Button className="w-full bg-purple-600 hover:bg-purple-700" size="lg">
-                    <Send className="mr-2 h-4 w-4" />
-                    Send Message
-                  </Button>
-
-                  <p className="text-xs text-gray-500 text-center">
-                    By submitting this form, you agree to our privacy policy and terms of service.
-                  </p>
-                </CardContent>
-              </Card>
+      {/* Location Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Visit Our Office</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Located in the heart of Addis Ababa, our office is open to community members, partners, and anyone
+                seeking support for human rights and democratic advocacy.
+              </p>
             </div>
 
-            {/* Contact Information */}
-            <div className="space-y-8">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-4">Contact Information</h2>
-                <p className="text-lg text-gray-600 mb-8">
-                  Reach out to us through any of these channels. We're always ready to help.
-                </p>
-              </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Map */}
+              <Card className="shadow-xl border-0 overflow-hidden">
+                <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 flex items-center justify-center relative">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center mx-auto mb-6">
+                      <MapPin className="h-10 w-10 text-blue-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3">Interactive Map</h3>
+                    <p className="text-gray-600 mb-6">View our exact location and get directions</p>
+                    <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <Globe className="h-4 w-4 mr-2" />
+                      Open in Google Maps
+                    </Button>
+                  </div>
+                </div>
+              </Card>
 
-              <div className="space-y-6">
-                <Card className="border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <MapPin className="h-6 w-6 text-purple-600" />
-                      </div>
+              {/* Location Details */}
+              <div className="space-y-8">
+                <Card className="shadow-lg border-0 bg-white">
+                  <CardContent className="p-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">Office Details</h3>
+
+                    <div className="space-y-6">
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Office Address</h3>
-                        <p className="text-gray-600 mb-2">
-                          Addis Ababa, Ethiopia
-                          <br />
-                          Bole Sub-City
-                          <br />
-                          Woreda 03, House No. 123
+                        <h4 className="font-semibold text-gray-900 mb-2">Full Address</h4>
+                        <div className="bg-gray-50 rounded-xl p-4">
+                          <p className="text-gray-700 leading-relaxed">
+                            <strong>Ethiopian Social Partnership Advocacy (ESPA)</strong>
+                            <br />
+                            Bole Sub City, Woreda 03
+                            <br />
+                            House No. 123, Near Bole Medhanialem Church
+                            <br />
+                            Addis Ababa, Ethiopia
+                            <br />
+                            P.O. Box 12345
+                          </p>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Transportation</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                            <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                            <span className="text-gray-700 text-sm">Light Rail: Mexico Station (10 min walk)</span>
+                          </div>
+                          <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                            <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                            <span className="text-gray-700 text-sm">Bus: Multiple routes to Meskel Square</span>
+                          </div>
+                          <div className="flex items-center space-x-3 p-3 bg-purple-50 rounded-lg">
+                            <div className="w-2 h-2 bg-purple-600 rounded-full"></div>
+                            <span className="text-gray-700 text-sm">Taxi: Easily accessible location</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-blue-50 rounded-xl p-6">
+                        <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
+                          <Calendar className="h-4 w-4 mr-2 text-blue-600" />
+                          Schedule a Visit
+                        </h4>
+                        <p className="text-gray-700 mb-4">
+                          We encourage scheduling appointments to ensure our team is available to meet with you and
+                          provide the best assistance for your needs.
                         </p>
-                        <Button variant="outline" size="sm">
-                          <MapPin className="mr-2 h-4 w-4" />
-                          View on Map
+                        <Button className="bg-blue-600 hover:bg-blue-700 text-white w-full">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          Schedule Appointment
                         </Button>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-
-                <Card className="border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Phone className="h-6 w-6 text-green-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Phone Numbers</h3>
-                        <div className="space-y-1 text-gray-600">
-                          <p>Main Office: +251 11 XXX XXXX</p>
-                          <p>Emergency: +251 9XX XXX XXX</p>
-                          <p>WhatsApp: +251 9XX XXX XXX</p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Mail className="h-6 w-6 text-blue-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Email Addresses</h3>
-                        <div className="space-y-1 text-gray-600">
-                          <p>General: info@espa-ethiopia.org</p>
-                          <p>Programs: programs@espa-ethiopia.org</p>
-                          <p>Media: media@espa-ethiopia.org</p>
-                          <p>Partnerships: partnerships@espa-ethiopia.org</p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-0 shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Clock className="h-6 w-6 text-orange-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Office Hours</h3>
-                        <div className="space-y-1 text-gray-600">
-                          <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
-                          <p>Saturday: 9:00 AM - 1:00 PM</p>
-                          <p>Sunday: Closed</p>
-                          <p className="text-sm text-orange-600 mt-2">Emergency contact available 24/7</p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
-
-              {/* Social Media */}
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-4">Follow Us</h3>
-                <div className="flex space-x-4">
-                  <Link
-                    href="#"
-                    className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white hover:bg-blue-700 transition-colors"
-                  >
-                    <Facebook className="h-5 w-5" />
-                  </Link>
-                  <Link
-                    href="#"
-                    className="w-10 h-10 bg-sky-500 rounded-lg flex items-center justify-center text-white hover:bg-sky-600 transition-colors"
-                  >
-                    <Twitter className="h-5 w-5" />
-                  </Link>
-                  <Link
-                    href="#"
-                    className="w-10 h-10 bg-blue-700 rounded-lg flex items-center justify-center text-white hover:bg-blue-800 transition-colors"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </Link>
-                  <Link
-                    href="#"
-                    className="w-10 h-10 bg-pink-600 rounded-lg flex items-center justify-center text-white hover:bg-pink-700 transition-colors"
-                  >
-                    <Instagram className="h-5 w-5" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Contacts */}
-      <section className="py-16 bg-gray-50">
-        <div className="container px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Meet Our Team</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Connect directly with our team members for specific inquiries and specialized support
-            </p>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="border-0 shadow-lg text-center hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <Image
-                  src="/placeholder.svg?height=120&width=120"
-                  alt="Executive Director"
-                  width={120}
-                  height={120}
-                  className="rounded-full mx-auto mb-4"
-                />
-                <CardTitle>Dr. Sarah Alemayehu</CardTitle>
-                <CardDescription>Executive Director</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm mb-4">
-                  Strategic leadership, partnerships, and organizational development
-                </p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Mail className="h-4 w-4 text-gray-400" />
-                    <span>sarah@espa-ethiopia.org</span>
-                  </div>
-                  <div className="flex items-center justify-center space-x-2">
-                    <Phone className="h-4 w-4 text-gray-400" />
-                    <span>+251 9XX XXX XXX</span>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm" className="mt-4">
-                  <MessageSquare className="mr-2 h-4 w-4" />
-                  Contact
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg text-center hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <Image
-                  src="/placeholder.svg?height=120&width=120"
-                  alt="Program Director"
-                  width={120}
-                  height={120}
-                  className="rounded-full mx-auto mb-4"
-                />
-                <CardTitle>Mr. Dawit Tekle</CardTitle>
-                <CardDescription>Program Director</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm mb-4">
-                  Program development, implementation, and community engagement
-                </p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Mail className="h-4 w-4 text-gray-400" />
-                    <span>dawit@espa-ethiopia.org</span>
-                  </div>
-                  <div className="flex items-center justify-center space-x-2">
-                    <Phone className="h-4 w-4 text-gray-400" />
-                    <span>+251 9XX XXX XXX</span>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm" className="mt-4">
-                  <MessageSquare className="mr-2 h-4 w-4" />
-                  Contact
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg text-center hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <Image
-                  src="/placeholder.svg?height=120&width=120"
-                  alt="Advocacy Coordinator"
-                  width={120}
-                  height={120}
-                  className="rounded-full mx-auto mb-4"
-                />
-                <CardTitle>Ms. Hanan Mohammed</CardTitle>
-                <CardDescription>Advocacy Coordinator</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm mb-4">Policy advocacy, human rights campaigns, and legal support</p>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center justify-center space-x-2">
-                    <Mail className="h-4 w-4 text-gray-400" />
-                    <span>hanan@espa-ethiopia.org</span>
-                  </div>
-                  <div className="flex items-center justify-center space-x-2">
-                    <Phone className="h-4 w-4 text-gray-400" />
-                    <span>+251 9XX XXX XXX</span>
-                  </div>
-                </div>
-                <Button variant="outline" size="sm" className="mt-4">
-                  <MessageSquare className="mr-2 h-4 w-4" />
-                  Contact
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Actions */}
-      <section className="py-16">
-        <div className="container px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Quick Actions</h2>
-            <p className="text-lg text-gray-600">Looking for something specific? These quick links might help</p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
-                  <Users className="h-8 w-8 text-blue-600 group-hover:text-white" />
-                </div>
-                <CardTitle>Volunteer with Us</CardTitle>
-                <CardDescription>Join our team of dedicated volunteers</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <Button variant="outline" size="sm" className="w-full">
-                  <ArrowRight className="mr-2 h-4 w-4" />
-                  Apply Now
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-600 transition-colors">
-                  <Building className="h-8 w-8 text-green-600 group-hover:text-white" />
-                </div>
-                <CardTitle>Partner with ESPA</CardTitle>
-                <CardDescription>Explore partnership opportunities</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <Button variant="outline" size="sm" className="w-full">
-                  <ArrowRight className="mr-2 h-4 w-4" />
-                  Learn More
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-600 transition-colors">
-                  <Globe className="h-8 w-8 text-purple-600 group-hover:text-white" />
-                </div>
-                <CardTitle>Media Inquiries</CardTitle>
-                <CardDescription>Press and media information</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <Button variant="outline" size="sm" className="w-full">
-                  <ArrowRight className="mr-2 h-4 w-4" />
-                  Media Kit
-                </Button>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer">
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors">
-                  <MessageSquare className="h-8 w-8 text-red-600 group-hover:text-white" />
-                </div>
-                <CardTitle>Emergency Contact</CardTitle>
-                <CardDescription>Urgent human rights issues</CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <Button variant="outline" size="sm" className="w-full">
-                  <Phone className="mr-2 h-4 w-4" />
-                  Call Now
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-lg text-gray-600">Find quick answers to common questions about ESPA and our work</p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-lg">How can I volunteer with ESPA?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  You can apply to volunteer through our website or contact our volunteer coordinator directly. We offer
-                  various opportunities including program support, event assistance, and advocacy work.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-lg">What areas does ESPA work in?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  ESPA operates across Ethiopia with programs in democratic education, human rights advocacy, peaceful
-                  coexistence, election observation, and support for vulnerable groups.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-lg">How can organizations partner with ESPA?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  We welcome partnerships with organizations that share our values. Contact our partnerships team to
-                  discuss collaboration opportunities in advocacy, education, or service delivery.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-lg">How can I support ESPA's work?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600">
-                  You can support us through donations, volunteering, spreading awareness about our work, or
-                  participating in our programs and events. Every contribution makes a difference.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-purple-600 text-white">
-        <div className="container px-4 md:px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold mb-6">Ready to Make a Difference?</h2>
-            <p className="text-xl text-purple-100 mb-8">
-              Join us in our mission to promote human rights, democracy, and social justice across Ethiopia. Together,
-              we can create lasting positive change.
-            </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" variant="secondary">
-                Get Involved Today
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="bg-white text-purple-600 border-white hover:bg-purple-50 hover:text-purple-700"
-              >
-                Learn About Our Programs
-              </Button>
             </div>
           </div>
         </div>

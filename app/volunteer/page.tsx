@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Heart, Users, Clock, MapPin, Star, CheckCircle, ArrowRight } from "lucide-react"
+import { Heart, Users, Clock, MapPin, Star, CheckCircle, ArrowRight, Award, Target, Handshake } from "lucide-react"
 import Image from "next/image"
 
 export default function VolunteerPage() {
@@ -18,7 +18,7 @@ export default function VolunteerPage() {
       timeCommitment: "4-6 hours/week",
       skills: ["Public Speaking", "Community Engagement", "Amharic/English"],
       urgent: true,
-      image: "/images/volunteer-education.jpg",
+      image: "/placeholder.svg?height=300&width=400",
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ export default function VolunteerPage() {
       timeCommitment: "3-5 hours/week",
       skills: ["Research", "Documentation", "Attention to Detail"],
       urgent: false,
-      image: "/images/volunteer-documentation.jpg",
+      image: "/placeholder.svg?height=300&width=400",
     },
     {
       id: 3,
@@ -38,7 +38,37 @@ export default function VolunteerPage() {
       timeCommitment: "2-4 hours/week",
       skills: ["Organization", "Communication", "Event Planning"],
       urgent: false,
-      image: "/images/volunteer-events.jpg",
+      image: "/placeholder.svg?height=300&width=400",
+    },
+    {
+      id: 4,
+      title: "Digital Content Creator",
+      description: "Create engaging content for social media and website",
+      location: "Remote",
+      timeCommitment: "3-4 hours/week",
+      skills: ["Content Creation", "Social Media", "Design"],
+      urgent: false,
+      image: "/placeholder.svg?height=300&width=400",
+    },
+    {
+      id: 5,
+      title: "Translation Specialist",
+      description: "Translate materials between Amharic, English, and local languages",
+      location: "Remote/Flexible",
+      timeCommitment: "2-5 hours/week",
+      skills: ["Multilingual", "Translation", "Cultural Sensitivity"],
+      urgent: true,
+      image: "/placeholder.svg?height=300&width=400",
+    },
+    {
+      id: 6,
+      title: "Legal Research Assistant",
+      description: "Support legal research and case documentation",
+      location: "Addis Ababa",
+      timeCommitment: "5-8 hours/week",
+      skills: ["Legal Research", "Analysis", "Documentation"],
+      urgent: false,
+      image: "/placeholder.svg?height=300&width=400",
     },
   ]
 
@@ -63,29 +93,145 @@ export default function VolunteerPage() {
       title: "Recognition",
       description: "Receive certificates and references for your volunteer contributions",
     },
+    {
+      icon: Award,
+      title: "Training Opportunities",
+      description: "Access to specialized training programs and workshops",
+    },
+    {
+      icon: Target,
+      title: "Flexible Commitment",
+      description: "Choose opportunities that fit your schedule and interests",
+    },
+  ]
+
+  const testimonials = [
+    {
+      name: "Sarah Alemayehu",
+      role: "Community Education Volunteer",
+      quote:
+        "Volunteering with ESPA has been incredibly rewarding. I've helped educate over 200 community members about their democratic rights.",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      name: "Michael Tadesse",
+      role: "Human Rights Documentation Volunteer",
+      quote:
+        "The training and support provided by ESPA helped me develop valuable research skills while contributing to important human rights work.",
+      image: "/placeholder.svg?height=80&width=80",
+    },
+    {
+      name: "Hanan Mohammed",
+      role: "Event Coordination Volunteer",
+      quote:
+        "Being part of ESPA's volunteer team has connected me with amazing people and given me hands-on experience in event management.",
+      image: "/placeholder.svg?height=80&width=80",
+    },
   ]
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-br from-red-600 via-red-700 to-red-800">
+      {/* Enhanced Hero Section */}
+      <section className="relative py-20 md:py-32 bg-gradient-to-br from-red-600 via-red-700 to-red-800 overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 container px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center text-white">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <Heart className="h-8 w-8 text-white" />
+        <div className="absolute inset-0 opacity-10">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23ffffff' fillOpacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 container px-4 md:px-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="text-white">
+              <div className="flex items-center space-x-3 mb-6">
+                <Badge className="bg-white/20 text-white border-white/30 backdrop-blur-sm">
+                  <Heart className="h-3 w-3 mr-1" />
+                  Get Involved
+                </Badge>
+                <Badge className="bg-yellow-500 text-black font-medium">
+                  <Star className="h-3 w-3 mr-1" />
+                  250+ Active Volunteers
+                </Badge>
+              </div>
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                Volunteer With <span className="text-yellow-300">ESPA</span>
+              </h1>
+
+              <p className="text-xl md:text-2xl text-red-100 mb-8 leading-relaxed">
+                Join our mission to advance human rights and democracy in Ethiopia. Your time and skills can make a
+                meaningful difference in communities across the country.
+              </p>
+
+              <div className="grid grid-cols-2 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold mb-2">15K+</div>
+                  <div className="text-red-200 text-sm">Volunteer Hours</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl md:text-4xl font-bold mb-2">50+</div>
+                  <div className="text-red-200 text-sm">Communities Served</div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" variant="secondary" className="bg-white text-red-600 hover:bg-red-50">
+                  <Heart className="h-5 w-5 mr-2" />
+                  Start Volunteering
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-white text-white hover:bg-white/10 bg-transparent"
+                >
+                  <Users className="h-5 w-5 mr-2" />
+                  View Opportunities
+                </Button>
               </div>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">Volunteer With Us</h1>
-            <p className="text-lg md:text-xl text-red-100 leading-relaxed max-w-3xl mx-auto mb-8">
-              Join our mission to advance human rights and democracy in Ethiopia. Your time and skills can make a
-              meaningful difference in communities across the country.
-            </p>
-            <Button size="lg" variant="secondary" className="bg-white text-red-600 hover:bg-red-50">
-              <Heart className="h-4 w-4 mr-2" />
-              Start Volunteering Today
-            </Button>
+
+            {/* Right Content - Image */}
+            <div className="relative">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="/placeholder.svg?height=600&width=500"
+                  alt="ESPA Volunteers in Action"
+                  width={500}
+                  height={600}
+                  className="object-cover w-full h-[500px] lg:h-[600px]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+              </div>
+
+              {/* Floating Stats Cards */}
+              <div className="absolute -top-6 -left-6 bg-white rounded-xl p-4 shadow-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                    <Handshake className="h-5 w-5 text-red-600" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900">6</div>
+                    <div className="text-xs text-gray-600">Open Positions</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute -bottom-6 -right-6 bg-white rounded-xl p-4 shadow-lg">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                    <Award className="h-5 w-5 text-yellow-600" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-900">98%</div>
+                    <div className="text-xs text-gray-600">Satisfaction Rate</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -94,9 +240,10 @@ export default function VolunteerPage() {
       <section className="py-16 md:py-24">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Current Opportunities</h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
-              Explore volunteer positions that match your skills and interests
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Current Opportunities</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Explore volunteer positions that match your skills and interests. All positions include comprehensive
+              training and ongoing support.
             </p>
           </div>
 
@@ -163,13 +310,13 @@ export default function VolunteerPage() {
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Volunteer With ESPA?</h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Why Volunteer With ESPA?</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Discover the benefits and rewards of volunteering with our organization
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {volunteerBenefits.map((benefit, index) => (
               <Card
                 key={index}
@@ -190,15 +337,48 @@ export default function VolunteerPage() {
         </div>
       </section>
 
-      {/* Volunteer Application Form */}
+      {/* Volunteer Testimonials */}
       <section className="py-16 md:py-24">
+        <div className="container px-4 md:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Volunteer Stories</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Hear from our volunteers about their experiences and impact
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="border-0 shadow-lg">
+                <CardContent className="p-6">
+                  <div className="flex items-center mb-4">
+                    <Image
+                      src={testimonial.image || "/placeholder.svg"}
+                      alt={testimonial.name}
+                      width={50}
+                      height={50}
+                      className="rounded-full mr-4"
+                    />
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Volunteer Application Form */}
+      <section className="py-16 md:py-24 bg-gray-50">
         <div className="container px-4 md:px-6">
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Apply to Volunteer</h2>
-              <p className="text-base md:text-lg text-gray-600">
-                Fill out the form below to start your volunteer journey with ESPA
-              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Apply to Volunteer</h2>
+              <p className="text-lg text-gray-600">Fill out the form below to start your volunteer journey with ESPA</p>
             </div>
 
             <Card className="border-0 shadow-lg">
@@ -324,7 +504,7 @@ export default function VolunteerPage() {
       <section className="py-16 md:py-24 bg-red-600">
         <div className="container px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center text-white">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">Ready to Make a Difference?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Make a Difference?</h2>
             <p className="text-lg md:text-xl text-red-100 mb-8 leading-relaxed">
               Join hundreds of volunteers who are already making an impact in Ethiopian communities.
             </p>

@@ -3,10 +3,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { BookOpen, Download, Calendar, FileText, Search, Filter } from "lucide-react"
+import { BookOpen, Download, Calendar, FileText, Search, Filter, Star, TrendingUp, Users, Award } from "lucide-react"
 import Image from "next/image"
 
 export default function PublicationsPage() {
+  const publicationStats = [
+    { label: "Total Publications", value: "25+", icon: BookOpen, color: "text-blue-600" },
+    { label: "Downloads", value: "15K+", icon: Download, color: "text-green-600" },
+    { label: "Citations", value: "150+", icon: Award, color: "text-purple-600" },
+    { label: "Languages", value: "4", icon: Users, color: "text-orange-600" },
+  ]
+
   const publications = [
     {
       id: 1,
@@ -18,7 +25,10 @@ export default function PublicationsPage() {
       pages: 45,
       downloads: 1250,
       featured: true,
-      image: "/images/publication-democracy-guide.jpg",
+      image: "/placeholder.svg?height=400&width=300",
+      authors: ["Dr. Almaz Bekele", "Prof. Tadesse Girma"],
+      language: "English/Amharic",
+      isbn: "978-1-234567-89-0",
     },
     {
       id: 2,
@@ -30,7 +40,10 @@ export default function PublicationsPage() {
       pages: 68,
       downloads: 890,
       featured: true,
-      image: "/images/publication-hr-handbook.jpg",
+      image: "/placeholder.svg?height=400&width=300",
+      authors: ["Hanan Mohammed", "Dr. Sarah Alemayehu"],
+      language: "English/Amharic",
+      isbn: "978-1-234567-90-6",
     },
     {
       id: 3,
@@ -42,7 +55,10 @@ export default function PublicationsPage() {
       pages: 32,
       downloads: 675,
       featured: false,
-      image: "/images/publication-community-practices.jpg",
+      image: "/placeholder.svg?height=400&width=300",
+      authors: ["Michael Tadesse"],
+      language: "English/Oromo",
+      isbn: "978-1-234567-91-3",
     },
     {
       id: 4,
@@ -54,7 +70,10 @@ export default function PublicationsPage() {
       pages: 56,
       downloads: 543,
       featured: false,
-      image: "/images/publication-women-leadership.jpg",
+      image: "/placeholder.svg?height=400&width=300",
+      authors: ["Dr. Zara Ahmed", "Almaz Tadesse"],
+      language: "English",
+      isbn: "978-1-234567-92-0",
     },
     {
       id: 5,
@@ -66,7 +85,10 @@ export default function PublicationsPage() {
       pages: 41,
       downloads: 432,
       featured: false,
-      image: "/images/publication-youth-manual.jpg",
+      image: "/placeholder.svg?height=400&width=300",
+      authors: ["Dawit Bekele", "Meron Haile"],
+      language: "English/Amharic",
+      isbn: "978-1-234567-93-7",
     },
     {
       id: 6,
@@ -78,7 +100,10 @@ export default function PublicationsPage() {
       pages: 73,
       downloads: 789,
       featured: false,
-      image: "/images/publication-legal-framework.jpg",
+      image: "/placeholder.svg?height=400&width=300",
+      authors: ["Dr. Getachew Assefa", "Tigist Mekonnen"],
+      language: "English/Amharic",
+      isbn: "978-1-234567-94-4",
     },
   ]
 
@@ -87,34 +112,84 @@ export default function PublicationsPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800">
-        <div className="absolute inset-0 bg-black/20"></div>
+      {/* Library-Style Hero Section */}
+      <section className="relative py-20 md:py-32 bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+        {/* Decorative Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full opacity-5">
+            <svg viewBox="0 0 100 100" className="w-full h-full">
+              <defs>
+                <pattern id="books" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <rect x="2" y="5" width="3" height="12" fill="#f97316" opacity="0.3" />
+                  <rect x="6" y="3" width="3" height="14" fill="#ea580c" opacity="0.3" />
+                  <rect x="10" y="6" width="3" height="11" fill="#dc2626" opacity="0.3" />
+                  <rect x="14" y="4" width="3" height="13" fill="#b91c1c" opacity="0.3" />
+                </pattern>
+              </defs>
+              <rect width="100" height="100" fill="url(#books)" />
+            </svg>
+          </div>
+        </div>
+
         <div className="relative z-10 container px-4 md:px-6">
-          <div className="max-w-4xl mx-auto text-center text-white">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <BookOpen className="h-8 w-8 text-white" />
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center space-x-2 bg-orange-100 text-orange-800 px-6 py-3 rounded-full text-sm font-medium mb-8">
+                <BookOpen className="h-4 w-4" />
+                <span>ESPA Publications Library</span>
+              </div>
+
+              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">
+                Knowledge <span className="text-orange-600">Repository</span>
+              </h1>
+
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-12">
+                Explore our comprehensive collection of research publications, educational guides, and policy documents
+                designed to advance human rights and democratic governance in Ethiopia.
+              </p>
+
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                {publicationStats.map((stat, index) => (
+                  <div key={index} className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                    <div
+                      className={`w-12 h-12 ${stat.color === "text-blue-600" ? "bg-blue-100" : stat.color === "text-green-600" ? "bg-green-100" : stat.color === "text-purple-600" ? "bg-purple-100" : "bg-orange-100"} rounded-xl flex items-center justify-center mx-auto mb-4`}
+                    >
+                      <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                    </div>
+                    <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
+                    <div className="text-sm text-gray-600">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Search Bar */}
+              <div className="max-w-2xl mx-auto">
+                <div className="bg-white rounded-2xl shadow-lg p-2">
+                  <div className="flex">
+                    <div className="flex-1 relative">
+                      <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <Input
+                        placeholder="Search publications by title, author, or topic..."
+                        className="pl-12 border-0 text-lg h-14 focus:ring-0"
+                      />
+                    </div>
+                    <Button size="lg" className="bg-orange-600 hover:bg-orange-700 px-8">
+                      Search
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">Publications</h1>
-            <p className="text-lg md:text-xl text-blue-100 leading-relaxed max-w-3xl mx-auto">
-              Access our comprehensive collection of research, guides, and educational materials on democracy, human
-              rights, and community development in Ethiopia.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Search and Filter Section */}
-      <section className="py-12 bg-gray-50">
+      {/* Filter Section */}
+      <section className="py-12 bg-white border-b">
         <div className="container px-4 md:px-6">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input placeholder="Search publications..." className="pl-10 h-12" />
-              </div>
               <Select>
                 <SelectTrigger className="w-full md:w-48 h-12">
                   <Filter className="h-4 w-4 mr-2" />
@@ -143,155 +218,223 @@ export default function PublicationsPage() {
                   <SelectItem value="framework">Framework</SelectItem>
                 </SelectContent>
               </Select>
+              <Select>
+                <SelectTrigger className="w-full md:w-48 h-12">
+                  <SelectValue placeholder="Language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Languages</SelectItem>
+                  <SelectItem value="english">English</SelectItem>
+                  <SelectItem value="amharic">Amharic</SelectItem>
+                  <SelectItem value="oromo">Oromo</SelectItem>
+                  <SelectItem value="multilingual">Multilingual</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select>
+                <SelectTrigger className="w-full md:w-32 h-12">
+                  <SelectValue placeholder="Year" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Years</SelectItem>
+                  <SelectItem value="2024">2024</SelectItem>
+                  <SelectItem value="2023">2023</SelectItem>
+                  <SelectItem value="2022">2022</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Publications */}
-      <section className="py-16 md:py-24">
+      {/* Featured Publications - Bookshelf Style */}
+      <section className="py-20">
         <div className="container px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Featured Publications</h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
-              Our most impactful and widely-accessed publications on key topics
-            </p>
-          </div>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Featured Publications</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Our most impactful and widely-accessed publications on key topics
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {featuredPublications.map((publication) => (
-              <Card
-                key={publication.id}
-                className="group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden"
-              >
-                <div className="aspect-[16/10] relative overflow-hidden">
-                  <Image
-                    src={publication.image || "/placeholder.svg"}
-                    alt={publication.title}
-                    width={600}
-                    height={375}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-yellow-500 text-black font-medium">Featured</Badge>
-                  </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <Badge variant="secondary" className="mb-2">
-                      {publication.category}
-                    </Badge>
-                    <h3 className="text-white text-lg md:text-xl font-bold leading-tight">{publication.title}</h3>
-                  </div>
-                </div>
-                <CardHeader>
-                  <CardDescription className="text-sm md:text-base">{publication.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center space-x-4">
-                      <span className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-1" />
-                        {new Date(publication.date).toLocaleDateString()}
-                      </span>
-                      <span className="flex items-center">
-                        <FileText className="h-4 w-4 mr-1" />
-                        {publication.pages} pages
-                      </span>
+            <div className="space-y-12">
+              {featuredPublications.map((publication, index) => (
+                <Card key={publication.id} className="border-0 shadow-2xl overflow-hidden">
+                  <div className={`lg:flex ${index % 2 === 1 ? "lg:flex-row-reverse" : ""}`}>
+                    {/* Book Cover */}
+                    <div className="lg:w-1/3 relative">
+                      <div className="aspect-[3/4] relative group">
+                        <Image
+                          src={publication.image || "/placeholder.svg"}
+                          alt={publication.title}
+                          width={300}
+                          height={400}
+                          className="object-cover w-full h-full"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <div className="absolute top-4 left-4">
+                          <Badge className="bg-yellow-500 text-black font-medium">
+                            <Star className="h-3 w-3 mr-1" />
+                            Featured
+                          </Badge>
+                        </div>
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="text-white text-sm font-medium mb-1">ISBN: {publication.isbn}</div>
+                          <div className="text-white/80 text-xs">{publication.language}</div>
+                        </div>
+
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <Button variant="secondary" size="lg">
+                            <BookOpen className="h-5 w-5 mr-2" />
+                            Preview
+                          </Button>
+                        </div>
+                      </div>
                     </div>
-                    <span>{publication.downloads} downloads</span>
+
+                    {/* Content */}
+                    <div className="lg:w-2/3 p-8 lg:p-12 flex flex-col justify-center">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Badge className="bg-orange-100 text-orange-800">{publication.category}</Badge>
+                        <Badge variant="outline">{publication.type}</Badge>
+                        <div className="flex items-center text-sm text-gray-500">
+                          <TrendingUp className="h-4 w-4 mr-1" />
+                          {publication.downloads.toLocaleString()} downloads
+                        </div>
+                      </div>
+
+                      <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                        {publication.title}
+                      </h3>
+
+                      <p className="text-gray-600 mb-6 text-lg leading-relaxed">{publication.description}</p>
+
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Users className="h-4 w-4 mr-2" />
+                          <span className="font-medium">Authors:</span>
+                          <span className="ml-2">{publication.authors.join(", ")}</span>
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <Calendar className="h-4 w-4 mr-2" />
+                          <span className="font-medium">Published:</span>
+                          <span className="ml-2">{new Date(publication.date).toLocaleDateString()}</span>
+                        </div>
+                        <div className="flex items-center text-sm text-gray-600">
+                          <FileText className="h-4 w-4 mr-2" />
+                          <span className="font-medium">Pages:</span>
+                          <span className="ml-2">{publication.pages}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex gap-4">
+                        <Button className="flex-1 bg-orange-600 hover:bg-orange-700" size="lg">
+                          <Download className="h-4 w-4 mr-2" />
+                          Download PDF
+                        </Button>
+                        <Button variant="outline" className="flex-1 bg-transparent" size="lg">
+                          <BookOpen className="h-4 w-4 mr-2" />
+                          Read Online
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                    <Download className="h-4 w-4 mr-2" />
-                    Download PDF
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* All Publications */}
-      <section className="py-16 md:py-24 bg-gray-50">
+      {/* All Publications - Library Grid */}
+      <section className="py-20 bg-gray-50">
         <div className="container px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">All Publications</h2>
-            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
-              Browse our complete library of educational and research materials
-            </p>
-          </div>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Complete Library</h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                Browse our complete collection of educational and research materials
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {regularPublications.map((publication) => (
-              <Card
-                key={publication.id}
-                className="group border-0 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white"
-              >
-                <div className="aspect-[4/3] relative overflow-hidden">
-                  <Image
-                    src={publication.image || "/placeholder.svg"}
-                    alt={publication.title}
-                    width={400}
-                    height={300}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-                  <div className="absolute top-3 left-3">
-                    <Badge variant="secondary" className="text-xs">
-                      {publication.type}
-                    </Badge>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {regularPublications.map((publication) => (
+                <Card
+                  key={publication.id}
+                  className="group border-0 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden bg-white"
+                >
+                  <div className="aspect-[3/4] relative overflow-hidden">
+                    <Image
+                      src={publication.image || "/placeholder.svg"}
+                      alt={publication.title}
+                      width={300}
+                      height={400}
+                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div className="absolute top-3 left-3">
+                      <Badge className="bg-orange-100 text-orange-800 text-xs">{publication.type}</Badge>
+                    </div>
+                    <div className="absolute bottom-3 left-3 right-3">
+                      <div className="text-white text-xs font-medium">{publication.language}</div>
+                    </div>
                   </div>
-                </div>
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge variant="outline" className="text-xs">
-                      {publication.category}
-                    </Badge>
-                    <span className="text-xs text-gray-500">{new Date(publication.date).toLocaleDateString()}</span>
-                  </div>
-                  <CardTitle className="text-lg group-hover:text-blue-600 transition-colors line-clamp-2">
-                    {publication.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm line-clamp-2">{publication.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
-                    <span>{publication.pages} pages</span>
-                    <span>{publication.downloads} downloads</span>
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="w-full group-hover:bg-blue-50 group-hover:border-blue-200"
-                  >
-                    <Download className="h-3 w-3 mr-2" />
-                    Download
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge variant="outline" className="text-xs">
+                        {publication.category}
+                      </Badge>
+                      <span className="text-xs text-gray-500">{new Date(publication.date).toLocaleDateString()}</span>
+                    </div>
+                    <CardTitle className="text-lg group-hover:text-orange-600 transition-colors line-clamp-2">
+                      {publication.title}
+                    </CardTitle>
+                    <CardDescription className="text-sm line-clamp-2">{publication.description}</CardDescription>
+                  </CardHeader>
+
+                  <CardContent>
+                    <div className="space-y-2 mb-4 text-xs text-gray-600">
+                      <div>Authors: {publication.authors.join(", ")}</div>
+                      <div className="flex items-center justify-between">
+                        <span>{publication.pages} pages</span>
+                        <span>{publication.downloads.toLocaleString()} downloads</span>
+                      </div>
+                    </div>
+                    <Button size="sm" className="w-full bg-orange-600 hover:bg-orange-700">
+                      <Download className="h-3 w-3 mr-2" />
+                      Download
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="py-16 md:py-24 bg-blue-600">
+      {/* Newsletter Signup */}
+      <section className="py-20 bg-gradient-to-r from-orange-600 to-red-600">
         <div className="container px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center text-white">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">Stay Updated</h2>
-            <p className="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Stay Updated</h2>
+            <p className="text-lg md:text-xl text-orange-100 mb-8 leading-relaxed">
               Subscribe to our newsletter to receive notifications about new publications and research updates.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 bg-white/10 border-white/20 text-white placeholder-blue-200"
+                className="flex-1 bg-white/10 border-white/20 text-white placeholder-orange-200 h-12"
               />
-              <Button variant="secondary" className="bg-white text-blue-600 hover:bg-blue-50">
+              <Button variant="secondary" className="bg-white text-orange-600 hover:bg-orange-50 h-12 px-8">
                 Subscribe
               </Button>
             </div>
+            <p className="text-sm text-orange-200 mt-4">
+              Join 5,000+ readers staying informed about our latest research
+            </p>
           </div>
         </div>
       </section>

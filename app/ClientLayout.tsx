@@ -2,7 +2,7 @@
 
 import type React from "react"
 import "@/app/globals.css"
-import { Inter } from "next/font/google"
+import { Inter, Poppins } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Footer } from "@/components/footer"
 import Link from "next/link"
@@ -25,11 +25,20 @@ import {
   FileText,
   Target,
   BarChart3,
+  Home,
 } from "lucide-react"
-import { Suspense, useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { usePathname } from "next/navigation"
+import { Toaster } from "@/components/ui/toaster"
+import { cn } from "@/lib/utils"
+import { ArrowUp } from "lucide-react"
 
 const inter = Inter({ subsets: ["latin"] })
+const poppins = Poppins({ weight: ["300", "400", "500", "600", "700", "800"], subsets: ["latin"] })
+
+interface ClientLayoutProps {
+  children: React.ReactNode
+}
 
 function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false)
@@ -40,6 +49,11 @@ function MobileMenu() {
   }
 
   const menuItems = [
+    {
+      title: "Home",
+      icon: Home,
+      href: "/",
+    },
     {
       title: "About",
       icon: Info,
@@ -112,7 +126,7 @@ function MobileMenu() {
       <SheetContent side="right" className="w-[320px] sm:w-[380px] flex flex-col">
         <SheetHeader>
           <SheetTitle className="flex items-center space-x-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full overflow-hidden bg-white shadow-md">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full overflow-hidden bg-white shadow-md aspect-square">
               <img src="/espa-logo.jpg" alt="ESPA Logo" className="h-full w-full object-contain" />
             </div>
             <span>ESPA Menu</span>
@@ -170,10 +184,10 @@ function MobileMenu() {
         {/* Sticky Support Button */}
         <div className="pt-4 mt-4 border-t bg-white">
           <Button
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 shadow-lg"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 h-9 text-sm transition-all duration-300 shadow-md hover:shadow-lg"
             onClick={() => setIsOpen(false)}
           >
-            <Heart className="mr-2 h-4 w-4" />
+            <Heart className="h-3.5 w-3.5 mr-1.5" />
             Support Us
           </Button>
         </div>
@@ -204,7 +218,7 @@ function Navigation() {
         <div className="flex items-center space-x-3">
           <Link href="/" className="flex items-center space-x-3 group">
             <div
-              className={`flex items-center justify-center rounded-full overflow-hidden bg-white shadow-lg group-hover:shadow-xl transition-all duration-200 ${
+              className={`flex items-center justify-center rounded-full overflow-hidden bg-white shadow-lg group-hover:shadow-xl transition-all duration-200 aspect-square ${
                 isScrolled ? "h-10 w-10 md:h-12 md:w-12" : "h-12 w-12 md:h-16 md:w-16"
               }`}
             >
@@ -222,7 +236,9 @@ function Navigation() {
               >
                 ESPA
               </h1>
-              <p className={`text-gray-600 leading-tight ${isScrolled ? "text-xs" : "text-xs md:text-sm"}`}>
+              <p
+                className={`text-gray-600 leading-tight whitespace-nowrap ${isScrolled ? "text-xs" : "text-xs md:text-sm"}`}
+              >
                 Ethiopian Social Partnership Advocacy
               </p>
             </div>
@@ -230,7 +246,14 @@ function Navigation() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-1">
+        <nav className="hidden lg:flex items-center ml-32 lg:ml-40 xl:ml-48 2xl:ml-56 space-x-3">
+          {/* Home */}
+          <Link
+            href="/"
+            className="px-3 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all duration-200 border-b-2 border-transparent hover:border-blue-600"
+          >
+            Home
+          </Link>
           {/* About Dropdown */}
           <div className="relative group">
             <button className="flex items-center px-3 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all duration-200 border-b-2 border-transparent hover:border-blue-600">
@@ -264,7 +287,7 @@ function Navigation() {
 
           {/* Our Mission Dropdown */}
           <div className="relative group">
-            <button className="flex items-center px-3 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all duration-200 border-b-2 border-transparent hover:border-blue-600">
+            <button className="flex items-center px-3 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all duration-200 border-b-2 border-transparent hover:border-blue-600 whitespace-nowrap">
               Our Mission
               <ChevronDown className="ml-1 h-3 w-3 transition-transform group-hover:rotate-180" />
             </button>
@@ -357,7 +380,7 @@ function Navigation() {
 
           {/* Get Involved Dropdown */}
           <div className="relative group">
-            <button className="flex items-center px-3 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all duration-200 border-b-2 border-transparent hover:border-blue-600">
+            <button className="flex items-center px-3 py-2 text-sm font-bold text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all duration-200 border-b-2 border-transparent hover:border-blue-600 whitespace-nowrap">
               Get Involved
               <ChevronDown className="ml-1 h-3 w-3 transition-transform group-hover:rotate-180" />
             </button>
@@ -444,25 +467,118 @@ function ScrollToTop() {
   const pathname = usePathname()
 
   useEffect(() => {
-    window.scrollTo(0, 0)
+    // Scroll to top immediately when route changes
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    })
   }, [pathname])
 
   return null
 }
 
-export default function ClientLayout({ children }: { children: React.ReactNode }) {
+export default function ClientLayout({ children }: ClientLayoutProps) {
+  const [showScrollTop, setShowScrollTop] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 500)
+    }
+
+    const handleLoad = () => {
+      setIsLoading(false)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("load", handleLoad)
+
+    // Fallback timeout for loading state
+    const timeout = setTimeout(() => setIsLoading(false), 3000)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("load", handleLoad)
+      clearTimeout(timeout)
+    }
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  }
+
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <div className="min-h-screen flex flex-col max-w-full overflow-x-hidden">
-            <Suspense fallback={null}>
-              <Navigation />
-              <ScrollToTop />
-            </Suspense>
-            <main className="flex-1 w-full pt-16 md:pt-18">{children}</main>
+    <html lang="en" className={cn(inter.variable, poppins.variable)}>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#2563eb" />
+        <meta
+          name="description"
+          content="Ethiopian Social Partnership Advocacy - Empowering communities through human rights advocacy, democratic education, and social justice initiatives across Ethiopia."
+        />
+        <meta property="og:title" content="Ethiopian Social Partnership Advocacy (ESPA)" />
+        <meta
+          property="og:description"
+          content="Advocating for human rights, promoting democracy, and empowering communities across Ethiopia through education, advocacy, and service."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://espa-ethiopia.org" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="icon" href="/espa-logo.jpg" />
+        <link rel="preload" as="image" href="/espa-logo.jpg" />
+      </head>
+      <body className="antialiased">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
+          <ScrollToTop />
+          {/* Skip to main content link for accessibility */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Skip to main content
+          </a>
+
+          {/* Loading Screen */}
+          {isLoading && (
+            <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+              <div className="text-center">
+                <div className="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 shadow-lg">
+                  <img src="/espa-logo.jpg" alt="ESPA Logo" className="w-full h-full object-contain" />
+                </div>
+                <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+                <p className="text-gray-600 font-medium">Loading ESPA...</p>
+              </div>
+            </div>
+          )}
+
+          <div className="flex flex-col min-h-screen">
+            <Navigation />
+
+            <main id="main-content" className="flex-1 pt-16 lg:pt-20" role="main">
+              {children}
+            </main>
+
             <Footer />
           </div>
+
+          {/* Scroll to Top Button */}
+          <Button
+            onClick={scrollToTop}
+            size="icon"
+            className={cn(
+              "fixed bottom-6 right-6 z-40 shadow-xl hover:shadow-2xl transition-all duration-300 bg-blue-600 hover:bg-blue-700",
+              showScrollTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10 pointer-events-none",
+            )}
+            aria-label="Scroll to top"
+          >
+            <ArrowUp className="w-5 h-5" />
+          </Button>
+
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

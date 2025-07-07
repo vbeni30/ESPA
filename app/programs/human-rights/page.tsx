@@ -1,41 +1,116 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Shield, Scale, Users, Phone, Calendar, MapPin, CheckCircle, Heart, BookOpen } from "lucide-react"
+import {
+  Shield,
+  Scale,
+  Users,
+  Phone,
+  Calendar,
+  MapPin,
+  CheckCircle,
+  Heart,
+  BookOpen,
+  AlertTriangle,
+} from "lucide-react"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function HumanRightsPage() {
+  const [activeCampaign, setActiveCampaign] = useState(0)
+
+  const campaigns = [
+    {
+      title: "Freedom of Expression",
+      description: "Advocating for press freedom and freedom of speech across Ethiopia",
+      icon: Shield,
+      color: "red",
+      activeCases: 15,
+      successRate: 78,
+      details: [
+        "Legal representation for journalists",
+        "Policy advocacy with government",
+        "Public awareness campaigns",
+        "International advocacy efforts",
+      ],
+    },
+    {
+      title: "Women's Rights",
+      description: "Protecting women from discrimination and gender-based violence",
+      icon: Users,
+      color: "blue",
+      activeCases: 450,
+      successRate: 89,
+      details: [
+        "Legal aid for survivors",
+        "Economic empowerment programs",
+        "Awareness and prevention campaigns",
+        "Support group facilitation",
+      ],
+    },
+    {
+      title: "Prison Reform",
+      description: "Improving conditions and rights of detained persons",
+      icon: Scale,
+      color: "green",
+      activeCases: 12,
+      successRate: 65,
+      details: [
+        "Regular facility inspections",
+        "Legal advocacy for detainees",
+        "Policy reform recommendations",
+        "Training for prison staff",
+      ],
+    },
+  ]
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-red-900 via-red-800 to-red-700 text-white py-20 lg:py-32">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      {/* Enhanced Hero Section */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1920&auto=format&fit=crop"
+            alt="Human rights advocacy meeting with community members and legal professionals"
+            width={1920}
+            height={1080}
+            className="object-cover w-full h-full"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-red-900/90 via-red-800/70 to-red-700/90"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <div className="space-y-4">
-                <Badge className="bg-red-100 text-red-800 hover:bg-red-200">
-                  <Shield className="h-3 w-3 mr-1" />
+              <div className="space-y-6">
+                <Badge className="bg-red-100 text-red-800 hover:bg-red-200 text-lg px-6 py-3">
+                  <Shield className="h-4 w-4 mr-2" />
                   Human Rights Advocacy
                 </Badge>
-                <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
+                <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-white">
                   Defending Human
-                  <span className="text-red-200 block">Rights & Dignity</span>
+                  <span className="text-red-300 block">Rights & Dignity</span>
                 </h1>
                 <p className="text-xl text-red-100 leading-relaxed max-w-2xl">
                   Protecting fundamental rights, providing legal support, and advocating for justice and equality for
                   all Ethiopian citizens.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-white text-red-900 hover:bg-red-50 font-semibold">
-                  <Phone className="h-5 w-5 mr-2" />
+              <div className="flex flex-col sm:flex-row gap-6">
+                <Button
+                  size="lg"
+                  className="bg-white text-red-900 hover:bg-red-50 font-semibold px-8 py-4 text-lg h-auto group"
+                >
+                  <Phone className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
                   Get Legal Support
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="bg-white text-red-600 border-white hover:bg-red-50 hover:text-red-700"
+                  className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm px-8 py-4 text-lg h-auto"
                 >
                   <BookOpen className="h-5 w-5 mr-2" />
                   Know Your Rights
@@ -45,10 +120,11 @@ export default function HumanRightsPage() {
             <div className="relative">
               <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/human-rights-advocacy.jpg"
-                  alt="Human rights advocacy meeting"
-                  fill
-                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=600&auto=format&fit=crop"
+                  alt="Human rights advocacy meeting in progress"
+                  width={600}
+                  height={450}
+                  className="object-cover w-full h-full"
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
@@ -68,110 +144,124 @@ export default function HumanRightsPage() {
       </section>
 
       {/* Program Overview */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Comprehensive Human Rights Protection</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <Badge className="mb-6 bg-red-100 text-red-800 text-lg px-6 py-3">Program Overview</Badge>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Comprehensive Human Rights Protection</h2>
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
               Our Human Rights Program provides legal support, advocacy, and education to ensure that all Ethiopian
               citizens can enjoy their fundamental rights and freedoms.
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="text-center pb-4">
-                <div className="mx-auto bg-red-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                  <Scale className="h-8 w-8 text-red-600" />
-                </div>
-                <CardTitle className="text-xl">Legal Support</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-gray-600">
-                  Free legal aid and representation for individuals facing human rights violations and injustices.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="text-center pb-4">
-                <div className="mx-auto bg-blue-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                  <Users className="h-8 w-8 text-blue-600" />
-                </div>
-                <CardTitle className="text-xl">Policy Advocacy</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-gray-600">
-                  Working with government and institutions to strengthen human rights laws and policies.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="text-center pb-4">
-                <div className="mx-auto bg-green-100 p-3 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                  <BookOpen className="h-8 w-8 text-green-600" />
-                </div>
-                <CardTitle className="text-xl">Rights Education</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-center text-gray-600">
-                  Community education programs to raise awareness about human rights and available protections.
-                </CardDescription>
-              </CardContent>
-            </Card>
+            {[
+              {
+                title: "Legal Support",
+                description:
+                  "Free legal aid and representation for individuals facing human rights violations and injustices.",
+                icon: Scale,
+                color: "red",
+                stats: "1,890 cases",
+              },
+              {
+                title: "Policy Advocacy",
+                description: "Working with government and institutions to strengthen human rights laws and policies.",
+                icon: Users,
+                color: "blue",
+                stats: "12 policy changes",
+              },
+              {
+                title: "Rights Education",
+                description:
+                  "Community education programs to raise awareness about human rights and available protections.",
+                icon: BookOpen,
+                color: "emerald",
+                stats: "5,000+ educated",
+              },
+            ].map((item, index) => {
+              const IconComponent = item.icon
+              return (
+                <Card
+                  key={index}
+                  className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden"
+                >
+                  <div className={`h-2 bg-gradient-to-r from-${item.color}-500 to-${item.color}-600`}></div>
+                  <CardHeader className="text-center pb-4">
+                    <div
+                      className={`mx-auto bg-gradient-to-br from-${item.color}-500 to-${item.color}-600 p-4 rounded-2xl w-20 h-20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      <IconComponent className="h-10 w-10 text-white" />
+                    </div>
+                    <CardTitle className="text-xl mb-2">{item.title}</CardTitle>
+                    <Badge className={`bg-${item.color}-100 text-${item.color}-800`}>{item.stats}</Badge>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-center text-gray-600 leading-relaxed">
+                      {item.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              )
+            })}
           </div>
         </div>
       </section>
 
       {/* Key Services */}
-      <section className="py-20">
+      <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-8">Our Services</h2>
+              <Badge className="mb-6 bg-purple-100 text-purple-800 text-lg px-6 py-3">Our Services</Badge>
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-8">Comprehensive Legal Support</h2>
               <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Legal Consultation</h3>
-                    <p className="text-gray-600">
-                      Free legal advice and consultation for individuals facing human rights violations.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Court Representation</h3>
-                    <p className="text-gray-600">Professional legal representation in courts for human rights cases.</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Documentation & Reporting</h3>
-                    <p className="text-gray-600">
-                      Systematic documentation of human rights violations and advocacy for accountability.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <CheckCircle className="h-6 w-6 text-green-500 mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Emergency Response</h3>
-                    <p className="text-gray-600">Rapid response team for urgent human rights situations and crises.</p>
-                  </div>
-                </div>
+                {[
+                  {
+                    title: "Legal Consultation",
+                    description: "Free legal advice and consultation for individuals facing human rights violations.",
+                    icon: Scale,
+                  },
+                  {
+                    title: "Court Representation",
+                    description: "Professional legal representation in courts for human rights cases.",
+                    icon: Shield,
+                  },
+                  {
+                    title: "Documentation & Reporting",
+                    description: "Systematic documentation of human rights violations and advocacy for accountability.",
+                    icon: BookOpen,
+                  },
+                  {
+                    title: "Emergency Response",
+                    description: "Rapid response team for urgent human rights situations and crises.",
+                    icon: AlertTriangle,
+                  },
+                ].map((service, index) => {
+                  const IconComponent = service.icon
+                  return (
+                    <div key={index} className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <IconComponent className="h-6 w-6 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-900 mb-2 text-lg">{service.title}</h3>
+                        <p className="text-gray-600 leading-relaxed">{service.description}</p>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl">
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/images/news-human-rights-campaign.jpg"
-                  alt="Human rights campaign"
-                  fill
-                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?q=80&w=600&auto=format&fit=crop"
+                  alt="Human rights legal consultation and support services"
+                  width={600}
+                  height={450}
+                  className="object-cover w-full h-full"
                 />
               </div>
             </div>
@@ -179,163 +269,201 @@ export default function HumanRightsPage() {
         </div>
       </section>
 
-      {/* Impact Story */}
-      <section className="py-20 bg-red-50">
+      {/* Interactive Campaigns */}
+      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Success Story</h2>
+            <Badge className="mb-6 bg-blue-100 text-blue-800 text-lg px-6 py-3">Active Campaigns</Badge>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Current Campaigns</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Active advocacy campaigns and ongoing human rights initiatives making real impact
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Campaign Navigation */}
+            <div className="space-y-4">
+              {campaigns.map((campaign, index) => {
+                const IconComponent = campaign.icon
+                return (
+                  <div
+                    key={index}
+                    onClick={() => setActiveCampaign(index)}
+                    className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${
+                      activeCampaign === index
+                        ? "bg-white shadow-xl scale-105"
+                        : "bg-gray-50 hover:bg-white hover:shadow-lg"
+                    }`}
+                  >
+                    <div className="flex items-center mb-4">
+                      <div
+                        className={`w-12 h-12 bg-gradient-to-br from-${campaign.color}-500 to-${campaign.color}-600 rounded-full flex items-center justify-center mr-4`}
+                      >
+                        <IconComponent className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-bold text-gray-900">{campaign.title}</h3>
+                        <p className="text-sm text-gray-600">
+                          {campaign.activeCases} active cases • {campaign.successRate}% success rate
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-gray-700">{campaign.description}</p>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Active Campaign Details */}
+            <div className="lg:sticky lg:top-8">
+              <Card className="border-0 shadow-2xl overflow-hidden">
+                <div
+                  className={`h-2 bg-gradient-to-r from-${campaigns[activeCampaign].color}-500 to-${campaigns[activeCampaign].color}-600`}
+                ></div>
+                <CardHeader className="text-center">
+                  <div
+                    className={`w-20 h-20 bg-gradient-to-br from-${campaigns[activeCampaign].color}-500 to-${campaigns[activeCampaign].color}-600 rounded-2xl flex items-center justify-center mx-auto mb-6`}
+                  >
+                    {(() => {
+                      const ActiveIcon = campaigns[activeCampaign].icon
+                      return <ActiveIcon className="h-10 w-10 text-white" />
+                    })()}
+                  </div>
+                  <CardTitle className="text-2xl mb-4">{campaigns[activeCampaign].title}</CardTitle>
+                  <Badge
+                    className={`bg-${campaigns[activeCampaign].color}-100 text-${campaigns[activeCampaign].color}-800`}
+                  >
+                    Active Campaign
+                  </Badge>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <p className="text-gray-700 leading-relaxed text-lg">{campaigns[activeCampaign].description}</p>
+
+                  <div className="grid grid-cols-2 gap-4 text-center">
+                    <div>
+                      <div className={`text-3xl font-bold text-${campaigns[activeCampaign].color}-600`}>
+                        {campaigns[activeCampaign].activeCases}
+                      </div>
+                      <div className="text-sm text-gray-600">Active Cases</div>
+                    </div>
+                    <div>
+                      <div className={`text-3xl font-bold text-${campaigns[activeCampaign].color}-600`}>
+                        {campaigns[activeCampaign].successRate}%
+                      </div>
+                      <div className="text-sm text-gray-600">Success Rate</div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-4">Campaign Activities:</h4>
+                    <ul className="space-y-3">
+                      {campaigns[activeCampaign].details.map((detail, detailIndex) => (
+                        <li key={detailIndex} className="flex items-start">
+                          <CheckCircle
+                            className={`h-5 w-5 text-${campaigns[activeCampaign].color}-500 mr-3 flex-shrink-0 mt-0.5`}
+                          />
+                          <span className="text-gray-600">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <Button
+                    className={`w-full bg-${campaigns[activeCampaign].color}-600 hover:bg-${campaigns[activeCampaign].color}-700`}
+                  >
+                    Support This Campaign
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Impact Story */}
+      <section className="py-24 bg-red-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <Badge className="mb-6 bg-red-100 text-red-800 text-lg px-6 py-3">Success Story</Badge>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Lives Changed Through Justice</h2>
             <p className="text-xl text-gray-600">How our legal support changed lives and protected rights</p>
           </div>
 
-          <Card className="max-w-4xl mx-auto border-0 shadow-xl">
-            <CardContent className="p-8 lg:p-12">
-              <div className="grid lg:grid-cols-3 gap-8 items-center">
-                <div className="lg:col-span-1">
-                  <div className="aspect-square rounded-full overflow-hidden shadow-lg">
-                    <Image
-                      src="/images/dr-sarah-alemayehu.jpg"
-                      alt="Meron Haile"
-                      width={200}
-                      height={200}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </div>
-                <div className="lg:col-span-2 space-y-6">
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-900 mb-2">Meron Haile</h3>
-                    <p className="text-red-600 font-medium">Small Business Owner, Dire Dawa</p>
-                  </div>
-                  <blockquote className="text-lg text-gray-700 italic leading-relaxed">
-                    "When my business was unfairly shut down by local authorities, I thought I had no recourse. ESPA's
-                    legal team not only helped me understand my rights but also represented me in court. Today, my
-                    business is thriving again, and I know my rights are protected."
-                  </blockquote>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600">
-                    <span className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      Dire Dawa
-                    </span>
-                    <span className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      Case Resolved 2023
-                    </span>
-                  </div>
+          <Card className="max-w-5xl mx-auto border-0 shadow-2xl overflow-hidden">
+            <div className="grid lg:grid-cols-3 gap-8 items-center p-8 lg:p-12">
+              <div className="lg:col-span-1">
+                <div className="aspect-square rounded-full overflow-hidden shadow-lg">
+                  <Image
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop"
+                    alt="Meron Haile - Small Business Owner"
+                    width={300}
+                    height={300}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
-            </CardContent>
+              <div className="lg:col-span-2 space-y-6">
+                <div>
+                  <h3 className="text-3xl font-bold text-gray-900 mb-2">Meron Haile</h3>
+                  <p className="text-red-600 font-medium text-lg">Small Business Owner, Dire Dawa</p>
+                </div>
+                <blockquote className="text-xl text-gray-700 italic leading-relaxed">
+                  "When my business was unfairly shut down by local authorities, I thought I had no recourse. ESPA's
+                  legal team not only helped me understand my rights but also represented me in court. Today, my
+                  business is thriving again, and I know my rights are protected."
+                </blockquote>
+                <div className="flex items-center space-x-6 text-sm text-gray-600">
+                  <span className="flex items-center">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    Dire Dawa
+                  </span>
+                  <span className="flex items-center">
+                    <Calendar className="h-4 w-4 mr-1" />
+                    Case Resolved 2023
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span className="text-green-600 font-medium">Business reopened with full compensation</span>
+                </div>
+              </div>
+            </div>
           </Card>
         </div>
       </section>
 
-      {/* Current Campaigns */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Current Campaigns</h2>
-            <p className="text-xl text-gray-600">Active advocacy campaigns and ongoing human rights initiatives</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <Badge className="bg-red-100 text-red-800">Active</Badge>
-                  <Shield className="h-5 w-5 text-gray-400" />
-                </div>
-                <CardTitle className="text-xl">Freedom of Expression</CardTitle>
-                <CardDescription>Advocating for press freedom and freedom of speech</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Cases Active:</span>
-                    <span className="font-medium">15</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Success Rate:</span>
-                    <span className="font-medium">78%</span>
-                  </div>
-                  <Button className="w-full mt-4" size="sm">
-                    Support Campaign
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <Badge className="bg-blue-100 text-blue-800">Ongoing</Badge>
-                  <Users className="h-5 w-5 text-gray-400" />
-                </div>
-                <CardTitle className="text-xl">Women's Rights</CardTitle>
-                <CardDescription>Protecting women from discrimination and violence</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Women Helped:</span>
-                    <span className="font-medium">450+</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Legal Wins:</span>
-                    <span className="font-medium">89%</span>
-                  </div>
-                  <Button className="w-full mt-4" size="sm" variant="outline">
-                    Learn More
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <Badge className="bg-green-100 text-green-800">New</Badge>
-                  <Scale className="h-5 w-5 text-gray-400" />
-                </div>
-                <CardTitle className="text-xl">Prison Reform</CardTitle>
-                <CardDescription>Improving conditions and rights of detained persons</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Facilities Visited:</span>
-                    <span className="font-medium">12</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Reports Filed:</span>
-                    <span className="font-medium">8</span>
-                  </div>
-                  <Button className="w-full mt-4" size="sm" variant="outline">
-                    View Reports
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* Emergency Contact */}
-      <section className="py-20 bg-gradient-to-r from-red-600 to-red-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <h2 className="text-3xl lg:text-4xl font-bold">Need Immediate Help?</h2>
+      <section className="relative py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1920&auto=format&fit=crop"
+            alt="Community members supporting human rights advocacy"
+            width={1920}
+            height={800}
+            className="object-cover w-full h-full"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-red-600/90 to-red-800/90"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="max-w-4xl mx-auto space-y-8 text-white">
+            <h2 className="text-4xl lg:text-5xl font-bold">Need Immediate Help?</h2>
             <p className="text-xl text-red-100">
               If you or someone you know is facing a human rights violation, don't wait. Our emergency response team is
               available 24/7 to provide immediate assistance and legal support.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-red-600 hover:bg-red-50 font-semibold">
-                <Phone className="h-5 w-5 mr-2" />
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button
+                size="lg"
+                className="bg-white text-red-600 hover:bg-red-50 font-semibold px-8 py-4 text-lg h-auto group"
+              >
+                <Phone className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
                 Emergency Hotline
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-white text-red-600 border-white hover:bg-red-50 hover:text-red-700"
+                className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm px-8 py-4 text-lg h-auto"
               >
                 <Heart className="h-5 w-5 mr-2" />
                 Report a Violation
