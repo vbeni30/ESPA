@@ -22,6 +22,70 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
+// Color class mappings for Tailwind
+const colorClassMap = {
+  blue: {
+    gradient: "from-blue-500 to-blue-600",
+    bg: "bg-blue-500",
+    text: "text-blue-500",
+    bgGradient: "bg-gradient-to-br from-blue-500 to-blue-600",
+    progressBar: "bg-gradient-to-r from-blue-500 to-blue-600",
+    topBar: "bg-gradient-to-r from-blue-500 to-blue-600",
+    floatingBg: "bg-blue-500",
+    floatingBg2: "bg-blue-400",
+  },
+  emerald: {
+    gradient: "from-emerald-500 to-emerald-600",
+    bg: "bg-emerald-500",
+    text: "text-emerald-500",
+    bgGradient: "bg-gradient-to-br from-emerald-500 to-emerald-600",
+    progressBar: "bg-gradient-to-r from-emerald-500 to-emerald-600",
+    topBar: "bg-gradient-to-r from-emerald-500 to-emerald-600",
+    floatingBg: "bg-emerald-500",
+    floatingBg2: "bg-emerald-400",
+  },
+  purple: {
+    gradient: "from-purple-500 to-purple-600",
+    bg: "bg-purple-500",
+    text: "text-purple-500",
+    bgGradient: "bg-gradient-to-br from-purple-500 to-purple-600",
+    progressBar: "bg-gradient-to-r from-purple-500 to-purple-600",
+    topBar: "bg-gradient-to-r from-purple-500 to-purple-600",
+    floatingBg: "bg-purple-500",
+    floatingBg2: "bg-purple-400",
+  },
+  orange: {
+    gradient: "from-orange-500 to-orange-600",
+    bg: "bg-orange-500",
+    text: "text-orange-500",
+    bgGradient: "bg-gradient-to-br from-orange-500 to-orange-600",
+    progressBar: "bg-gradient-to-r from-orange-500 to-orange-600",
+    topBar: "bg-gradient-to-r from-orange-500 to-orange-600",
+    floatingBg: "bg-orange-500",
+    floatingBg2: "bg-orange-400",
+  },
+  pink: {
+    gradient: "from-pink-500 to-pink-600",
+    bg: "bg-pink-500",
+    text: "text-pink-500",
+    bgGradient: "bg-gradient-to-br from-pink-500 to-pink-600",
+    progressBar: "bg-gradient-to-r from-pink-500 to-pink-600",
+    topBar: "bg-gradient-to-r from-pink-500 to-pink-600",
+    floatingBg: "bg-pink-500",
+    floatingBg2: "bg-pink-400",
+  },
+  green: {
+    gradient: "from-green-500 to-green-600",
+    bg: "bg-green-500",
+    text: "text-green-500",
+    bgGradient: "bg-gradient-to-br from-green-500 to-green-600",
+    progressBar: "bg-gradient-to-r from-green-500 to-green-600",
+    topBar: "bg-gradient-to-r from-green-500 to-green-600",
+    floatingBg: "bg-green-500",
+    floatingBg2: "bg-green-400",
+  },
+}
+
 // Animated counter component
 function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
   const [count, setCount] = useState(0)
@@ -61,7 +125,7 @@ export default function ImpactPageClient() {
       title: "Human Rights Advocacy",
       description: "Protecting and promoting fundamental human rights across Ethiopia",
       icon: Scale,
-      color: "blue",
+      color: "blue" as keyof typeof colorClassMap,
       stats: [
         { label: "Legal Cases Supported", value: 150, suffix: "+" },
         { label: "Rights Violations Addressed", value: 300, suffix: "+" },
@@ -79,7 +143,7 @@ export default function ImpactPageClient() {
       title: "Democratic Education",
       description: "Building democratic understanding and civic engagement",
       icon: BookOpen,
-      color: "emerald",
+      color: "emerald" as keyof typeof colorClassMap,
       stats: [
         { label: "Citizens Educated", value: 12000, suffix: "+" },
         { label: "Workshops Conducted", value: 200, suffix: "+" },
@@ -97,7 +161,7 @@ export default function ImpactPageClient() {
       title: "Community Empowerment",
       description: "Supporting marginalized communities and vulnerable groups",
       icon: Users,
-      color: "purple",
+      color: "purple" as keyof typeof colorClassMap,
       stats: [
         { label: "Communities Served", value: 75, suffix: "+" },
         { label: "Women Empowered", value: 3000, suffix: "+" },
@@ -179,28 +243,41 @@ export default function ImpactPageClient() {
               {/* Key Statistics */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
                 {[
-                  { icon: Users, label: "Lives Impacted", value: 25000, color: "blue" },
-                  { icon: MapPin, label: "Communities Served", value: 102, color: "emerald" },
-                  { icon: BookOpen, label: "Programs Delivered", value: 63, color: "purple" },
-                  { icon: Award, label: "Years of Service", value: 8, color: "orange" },
-                ].map((stat, index) => (
-                  <Card
-                    key={index}
-                    className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-center group"
-                  >
-                    <CardContent className="pt-8">
-                      <div
-                        className={`w-16 h-16 bg-gradient-to-br from-${stat.color}-500 to-${stat.color}-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        <stat.icon className="h-8 w-8 text-white" />
-                      </div>
-                      <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                        <AnimatedCounter end={stat.value} suffix={stat.value > 100 ? "+" : ""} />
-                      </div>
-                      <div className="text-gray-600 font-medium">{stat.label}</div>
-                    </CardContent>
-                  </Card>
-                ))}
+                  { icon: Users, label: "Lives Impacted", value: 25000, color: "blue" as keyof typeof colorClassMap },
+                  {
+                    icon: MapPin,
+                    label: "Communities Served",
+                    value: 102,
+                    color: "emerald" as keyof typeof colorClassMap,
+                  },
+                  {
+                    icon: BookOpen,
+                    label: "Programs Delivered",
+                    value: 63,
+                    color: "purple" as keyof typeof colorClassMap,
+                  },
+                  { icon: Award, label: "Years of Service", value: 8, color: "orange" as keyof typeof colorClassMap },
+                ].map((stat, index) => {
+                  const colorClasses = colorClassMap[stat.color]
+                  return (
+                    <Card
+                      key={index}
+                      className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 text-center group"
+                    >
+                      <CardContent className="pt-8">
+                        <div
+                          className={`w-16 h-16 ${colorClasses.bgGradient} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <stat.icon className="h-8 w-8 text-white" />
+                        </div>
+                        <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                          <AnimatedCounter end={stat.value} suffix={stat.value > 100 ? "+" : ""} />
+                        </div>
+                        <div className="text-gray-600 font-medium">{stat.label}</div>
+                      </CardContent>
+                    </Card>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -220,79 +297,82 @@ export default function ImpactPageClient() {
               </div>
 
               <div className="space-y-16">
-                {impactAreas.map((area, index) => (
-                  <div
-                    key={index}
-                    className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? "lg:grid-flow-col-dense" : ""}`}
-                  >
-                    <div className={index % 2 === 1 ? "lg:col-start-2" : ""}>
-                      <div className="space-y-6">
-                        <div className="flex items-center space-x-4">
-                          <div
-                            className={`w-16 h-16 bg-gradient-to-br from-${area.color}-500 to-${area.color}-600 rounded-2xl flex items-center justify-center`}
-                          >
-                            <area.icon className="h-8 w-8 text-white" />
-                          </div>
-                          <div>
-                            <h3 className="text-3xl font-bold text-gray-900">{area.title}</h3>
-                            <p className="text-gray-600">{area.description}</p>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-4">
-                          {area.stats.map((stat, statIndex) => (
-                            <div key={statIndex} className="bg-gray-50 rounded-lg p-4 text-center">
-                              <div className="text-2xl font-bold text-gray-900 mb-1">
-                                <AnimatedCounter end={stat.value} suffix={stat.suffix} />
-                              </div>
-                              <div className="text-sm text-gray-600">{stat.label}</div>
+                {impactAreas.map((area, index) => {
+                  const colorClasses = colorClassMap[area.color]
+                  return (
+                    <div
+                      key={index}
+                      className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? "lg:grid-flow-col-dense" : ""}`}
+                    >
+                      <div className={index % 2 === 1 ? "lg:col-start-2" : ""}>
+                        <div className="space-y-6">
+                          <div className="flex items-center space-x-4">
+                            <div
+                              className={`w-16 h-16 ${colorClasses.bgGradient} rounded-2xl flex items-center justify-center`}
+                            >
+                              <area.icon className="h-8 w-8 text-white" />
                             </div>
-                          ))}
-                        </div>
+                            <div>
+                              <h3 className="text-3xl font-bold text-gray-900">{area.title}</h3>
+                              <p className="text-gray-600">{area.description}</p>
+                            </div>
+                          </div>
 
-                        <div className="space-y-3">
-                          <h4 className="font-semibold text-gray-900">Key Achievements:</h4>
-                          <ul className="space-y-2">
-                            {area.achievements.map((achievement, achievementIndex) => (
-                              <li key={achievementIndex} className="flex items-start">
-                                <CheckCircle className={`h-5 w-5 text-${area.color}-500 mr-3 flex-shrink-0 mt-0.5`} />
-                                <span className="text-gray-700">{achievement}</span>
-                              </li>
+                          <div className="grid grid-cols-2 gap-4">
+                            {area.stats.map((stat, statIndex) => (
+                              <div key={statIndex} className="bg-gray-50 rounded-lg p-4 text-center">
+                                <div className="text-2xl font-bold text-gray-900 mb-1">
+                                  <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+                                </div>
+                                <div className="text-sm text-gray-600">{stat.label}</div>
+                              </div>
                             ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
+                          </div>
 
-                    <div className={index % 2 === 1 ? "lg:col-start-1" : ""}>
-                      <div className="relative">
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                          <Image
-                            src={`https://images.unsplash.com/photo-${
-                              index === 0
-                                ? "1589156280159-27698a70f29e"
-                                : index === 1
-                                  ? "1544476915-ed1370594142"
-                                  : "1559027615-cd4628902d4a"
-                            }?q=80&w=600&auto=format&fit=crop`}
-                            alt={`${area.title} impact visualization showing community engagement and positive outcomes`}
-                            width={600}
-                            height={400}
-                            className="object-cover w-full h-full"
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                          <div className="space-y-3">
+                            <h4 className="font-semibold text-gray-900">Key Achievements:</h4>
+                            <ul className="space-y-2">
+                              {area.achievements.map((achievement, achievementIndex) => (
+                                <li key={achievementIndex} className="flex items-start">
+                                  <CheckCircle className={`h-5 w-5 ${colorClasses.text} mr-3 flex-shrink-0 mt-0.5`} />
+                                  <span className="text-gray-700">{achievement}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
-                        <div
-                          className={`absolute -top-6 -right-6 w-24 h-24 bg-${area.color}-500 rounded-full opacity-20 animate-pulse`}
-                        ></div>
-                        <div
-                          className={`absolute -bottom-6 -left-6 w-32 h-32 bg-${area.color}-400 rounded-full opacity-20 animate-pulse delay-1000`}
-                        ></div>
+                      </div>
+
+                      <div className={index % 2 === 1 ? "lg:col-start-1" : ""}>
+                        <div className="relative">
+                          <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                            <Image
+                              src={`https://images.unsplash.com/photo-${
+                                index === 0
+                                  ? "1589156280159-27698a70f29e"
+                                  : index === 1
+                                    ? "1544476915-ed1370594142"
+                                    : "1559027615-cd4628902d4a"
+                              }?q=80&w=600&auto=format&fit=crop`}
+                              alt={`${area.title} impact visualization showing community engagement and positive outcomes`}
+                              width={600}
+                              height={400}
+                              className="object-cover w-full h-full"
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                          </div>
+                          <div
+                            className={`absolute -top-6 -right-6 w-24 h-24 ${colorClasses.floatingBg} rounded-full opacity-20 animate-pulse`}
+                          ></div>
+                          <div
+                            className={`absolute -bottom-6 -left-6 w-32 h-32 ${colorClasses.floatingBg2} rounded-full opacity-20 animate-pulse delay-1000`}
+                          ></div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -456,12 +536,12 @@ export default function ImpactPageClient() {
           </div>
         </section>
 
-        {/* Call to Action */}
+        {/* CTA Section */}
         <section className="relative py-32 overflow-hidden">
           <div className="absolute inset-0">
             <Image
-              src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=1920&auto=format&fit=crop"
-              alt="Community members working together towards a common goal, representing collective impact and future possibilities"
+              src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1920&auto=format&fit=crop"
+              alt="Community members working together toward positive change"
               width={1920}
               height={800}
               className="object-cover w-full h-full"
@@ -474,8 +554,8 @@ export default function ImpactPageClient() {
             <div className="max-w-4xl mx-auto text-center text-white">
               <h2 className="text-4xl md:text-5xl font-bold mb-8">Be Part of Our Impact</h2>
               <p className="text-xl text-emerald-100 mb-12 leading-relaxed">
-                Your support amplifies our impact and helps us reach more communities, protect more rights, and create
-                more opportunities for positive change across Ethiopia.
+                Join us in creating measurable, lasting change in communities across Ethiopia. Your support helps us
+                expand our reach and deepen our impact.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-6">
                 <Link href="/donate">
@@ -490,7 +570,7 @@ export default function ImpactPageClient() {
                     variant="outline"
                     className="bg-transparent text-white border-white hover:bg-white/10 px-8 py-4 text-lg h-auto"
                   >
-                    Explore Programs
+                    View Our Programs
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
@@ -499,8 +579,57 @@ export default function ImpactPageClient() {
           </div>
         </section>
       </div>
-
-      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Ethiopian Social Partnership Advocacy",
+            alternateName: "ESPA",
+            description:
+              "ESPA has impacted over 25,000 lives across 102 communities in Ethiopia through human rights advocacy, democratic education, and community empowerment programs.",
+            url: "https://espa-ethiopia.org",
+            logo: "https://espa-ethiopia.org/espa-logo.jpg",
+            foundingLocation: {
+              "@type": "Place",
+              name: "Addis Ababa, Ethiopia",
+            },
+            areaServed: "Ethiopia",
+            knowsAbout: ["Human Rights", "Democratic Education", "Social Advocacy", "Community Development"],
+            hasOfferCatalog: {
+              "@type": "OfferCatalog",
+              name: "ESPA Programs",
+              itemListElement: [
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Human Rights Advocacy",
+                    description: "Legal support and advocacy for human rights violations",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Democratic Education",
+                    description: "Civic education and democratic participation training",
+                  },
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Community Empowerment",
+                    description: "Support programs for marginalized communities",
+                  },
+                },
+              ],
+            },
+          }),
+        }}
+      />
     </>
   )
 }

@@ -8,8 +8,60 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
+// Color class mappings for Tailwind
+const colorClassMap = {
+  blue: {
+    gradient: "from-blue-500 to-blue-600",
+    bg: "bg-blue-500",
+    text: "text-blue-500",
+    bgGradient: "bg-gradient-to-br from-blue-500 to-blue-600",
+    progressBar: "bg-gradient-to-r from-blue-500 to-blue-600",
+    topBar: "bg-gradient-to-r from-blue-500 to-blue-600",
+  },
+  emerald: {
+    gradient: "from-emerald-500 to-emerald-600",
+    bg: "bg-emerald-500",
+    text: "text-emerald-500",
+    bgGradient: "bg-gradient-to-br from-emerald-500 to-emerald-600",
+    progressBar: "bg-gradient-to-r from-emerald-500 to-emerald-600",
+    topBar: "bg-gradient-to-r from-emerald-500 to-emerald-600",
+  },
+  purple: {
+    gradient: "from-purple-500 to-purple-600",
+    bg: "bg-purple-500",
+    text: "text-purple-500",
+    bgGradient: "bg-gradient-to-br from-purple-500 to-purple-600",
+    progressBar: "bg-gradient-to-r from-purple-500 to-purple-600",
+    topBar: "bg-gradient-to-r from-purple-500 to-purple-600",
+  },
+  orange: {
+    gradient: "from-orange-500 to-orange-600",
+    bg: "bg-orange-500",
+    text: "text-orange-500",
+    bgGradient: "bg-gradient-to-br from-orange-500 to-orange-600",
+    progressBar: "bg-gradient-to-r from-orange-500 to-orange-600",
+    topBar: "bg-gradient-to-r from-orange-500 to-orange-600",
+  },
+  pink: {
+    gradient: "from-pink-500 to-pink-600",
+    bg: "bg-pink-500",
+    text: "text-pink-500",
+    bgGradient: "bg-gradient-to-br from-pink-500 to-pink-600",
+    progressBar: "bg-gradient-to-r from-pink-500 to-pink-600",
+    topBar: "bg-gradient-to-r from-pink-500 to-pink-600",
+  },
+  indigo: {
+    gradient: "from-indigo-500 to-indigo-600",
+    bg: "bg-indigo-500",
+    text: "text-indigo-500",
+    bgGradient: "bg-gradient-to-br from-indigo-500 to-indigo-600",
+    progressBar: "bg-gradient-to-r from-indigo-500 to-indigo-600",
+    topBar: "bg-gradient-to-r from-indigo-500 to-indigo-600",
+  },
+}
+
 // Progress bar component for objectives
-function ProgressBar({ progress, color = "blue" }: { progress: number; color?: string }) {
+function ProgressBar({ progress, color = "blue" }: { progress: number; color?: keyof typeof colorClassMap }) {
   const [currentProgress, setCurrentProgress] = useState(0)
 
   useEffect(() => {
@@ -17,10 +69,12 @@ function ProgressBar({ progress, color = "blue" }: { progress: number; color?: s
     return () => clearTimeout(timer)
   }, [progress])
 
+  const colorClasses = colorClassMap[color] || colorClassMap.blue
+
   return (
     <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
       <div
-        className={`bg-gradient-to-r from-${color}-500 to-${color}-600 h-2 rounded-full transition-all duration-1000 ease-out`}
+        className={`${colorClasses.progressBar} h-2 rounded-full transition-all duration-1000 ease-out`}
         style={{ width: `${currentProgress}%` }}
       ></div>
     </div>
@@ -36,7 +90,7 @@ export default function MissionPageClient() {
       description:
         "Ensure the understanding of democratic thoughts and concepts for Ethiopian society through comprehensive educational programs and public awareness campaigns.",
       progress: 85,
-      color: "blue",
+      color: "blue" as keyof typeof colorClassMap,
       icon: BookOpen,
     },
     {
@@ -44,7 +98,7 @@ export default function MissionPageClient() {
       description:
         "Educate citizens to create the culture of peaceful co-existence among different people groups through dialogue, conflict resolution, and community engagement.",
       progress: 78,
-      color: "emerald",
+      color: "emerald" as keyof typeof colorClassMap,
       icon: Users,
     },
     {
@@ -52,7 +106,7 @@ export default function MissionPageClient() {
       description:
         "Work to confirm human rights of all citizens through advocacy, legal support, and partnerships with government and international organizations.",
       progress: 92,
-      color: "purple",
+      color: "purple" as keyof typeof colorClassMap,
       icon: Shield,
     },
     {
@@ -60,7 +114,7 @@ export default function MissionPageClient() {
       description:
         "Create the culture of national consensus among different thoughts through trainings, seminars, and workshops that promote dialogue and understanding.",
       progress: 70,
-      color: "orange",
+      color: "orange" as keyof typeof colorClassMap,
       icon: Globe,
     },
     {
@@ -68,7 +122,7 @@ export default function MissionPageClient() {
       description:
         "Give awareness about development, peace, human rights and democracy by establishing media institutions and creating partnerships with media stakeholders.",
       progress: 65,
-      color: "pink",
+      color: "pink" as keyof typeof colorClassMap,
       icon: Lightbulb,
     },
     {
@@ -76,7 +130,7 @@ export default function MissionPageClient() {
       description:
         "Work to improve the conditional hurdles of women and the disabled through targeted programs, advocacy, and support services.",
       progress: 88,
-      color: "indigo",
+      color: "indigo" as keyof typeof colorClassMap,
       icon: Heart,
     },
   ]
@@ -203,7 +257,7 @@ export default function MissionPageClient() {
                 {
                   title: "Advocacy",
                   icon: Scale,
-                  color: "blue",
+                  color: "blue" as keyof typeof colorClassMap,
                   description:
                     "ESPA advocates for any marginalized and oppressed citizens with stakeholders. We work to amplify the voices of those who are often unheard and ensure their rights are protected.",
                   features: [
@@ -216,7 +270,7 @@ export default function MissionPageClient() {
                 {
                   title: "Education",
                   icon: BookOpen,
-                  color: "emerald",
+                  color: "emerald" as keyof typeof colorClassMap,
                   description:
                     "ESPA educates people to explore their natural human rights and apply their freedom of living, education, work, worship, democratic rights and so on.",
                   features: [
@@ -229,7 +283,7 @@ export default function MissionPageClient() {
                 {
                   title: "Service",
                   icon: Heart,
-                  color: "purple",
+                  color: "purple" as keyof typeof colorClassMap,
                   description:
                     "ESPA provides holistic service to oppressed and marginalized in different forms including looking for opportunities to assist oppressed and marginalized citizens.",
                   features: [
@@ -239,36 +293,39 @@ export default function MissionPageClient() {
                     "Capacity building programs",
                   ],
                 },
-              ].map((principle, index) => (
-                <Card
-                  key={index}
-                  className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden"
-                >
-                  <div className={`h-2 bg-gradient-to-r from-${principle.color}-500 to-${principle.color}-600`}></div>
-                  <CardHeader className="text-center pb-4">
-                    <div
-                      className={`w-20 h-20 bg-gradient-to-br from-${principle.color}-500 to-${principle.color}-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      {principle.icon && <principle.icon className="h-10 w-10 text-white" />}
-                    </div>
-                    <CardTitle className="text-2xl">{principle.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <p className="text-gray-700 leading-relaxed">{principle.description}</p>
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900">Key Activities:</h4>
-                      <ul className="space-y-2">
-                        {principle.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-start">
-                            <CheckCircle className={`h-5 w-5 text-${principle.color}-500 mr-3 flex-shrink-0 mt-0.5`} />
-                            <span className="text-sm text-gray-600">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              ].map((principle, index) => {
+                const colorClasses = colorClassMap[principle.color]
+                return (
+                  <Card
+                    key={index}
+                    className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 group overflow-hidden"
+                  >
+                    <div className={`h-2 ${colorClasses.topBar}`}></div>
+                    <CardHeader className="text-center pb-4">
+                      <div
+                        className={`w-20 h-20 ${colorClasses.bgGradient} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}
+                      >
+                        <principle.icon className="h-10 w-10 text-white" />
+                      </div>
+                      <CardTitle className="text-2xl">{principle.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <p className="text-gray-700 leading-relaxed">{principle.description}</p>
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-gray-900">Key Activities:</h4>
+                        <ul className="space-y-2">
+                          {principle.features.map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-start">
+                              <CheckCircle className={`h-5 w-5 ${colorClasses.text} mr-3 flex-shrink-0 mt-0.5`} />
+                              <span className="text-sm text-gray-600">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -290,45 +347,47 @@ export default function MissionPageClient() {
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Objectives List */}
               <div className="space-y-4">
-                {objectives.map((objective, index) => (
-                  <div
-                    key={index}
-                    onClick={() => setActiveObjective(index)}
-                    className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${
-                      activeObjective === index
-                        ? "bg-white shadow-xl scale-105"
-                        : "bg-gray-50 hover:bg-white hover:shadow-lg"
-                    }`}
-                  >
-                    <div className="flex items-center mb-4">
-                      <div
-                        className={`w-12 h-12 bg-gradient-to-br from-${objective.color}-500 to-${objective.color}-600 rounded-full flex items-center justify-center mr-4`}
-                      >
-                        {objective.icon && <objective.icon className="h-6 w-6 text-white" />}
+                {objectives.map((objective, index) => {
+                  const colorClasses = colorClassMap[objective.color]
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => setActiveObjective(index)}
+                      className={`p-6 rounded-xl cursor-pointer transition-all duration-300 ${
+                        activeObjective === index
+                          ? "bg-white shadow-xl scale-105"
+                          : "bg-gray-50 hover:bg-white hover:shadow-lg"
+                      }`}
+                    >
+                      <div className="flex items-center mb-4">
+                        <div
+                          className={`w-12 h-12 ${colorClasses.bgGradient} rounded-full flex items-center justify-center mr-4`}
+                        >
+                          <objective.icon className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold text-gray-900">{objective.title}</h3>
+                          <div className="text-sm text-gray-500">Progress: {objective.progress}%</div>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold text-gray-900">{objective.title}</h3>
-                        <div className="text-sm text-gray-500">Progress: {objective.progress}%</div>
-                      </div>
+                      <ProgressBar progress={objective.progress} color={objective.color} />
                     </div>
-                    <ProgressBar progress={objective.progress} color={objective.color} />
-                  </div>
-                ))}
+                  )
+                })}
               </div>
 
               {/* Active Objective Details */}
               <div className="lg:sticky lg:top-8">
                 <Card className="border-0 shadow-2xl overflow-hidden">
-                  <div
-                    className={`h-2 bg-gradient-to-r from-${objectives[activeObjective].color}-500 to-${objectives[activeObjective].color}-600`}
-                  ></div>
+                  <div className={`h-2 ${colorClassMap[objectives[activeObjective].color].topBar}`}></div>
                   <CardHeader className="text-center">
                     <div
-                      className={`w-20 h-20 bg-gradient-to-br from-${objectives[activeObjective].color}-500 to-${objectives[activeObjective].color}-600 rounded-2xl flex items-center justify-center mx-auto mb-6`}
+                      className={`w-20 h-20 ${colorClassMap[objectives[activeObjective].color].bgGradient} rounded-2xl flex items-center justify-center mx-auto mb-6`}
                     >
-                      {objectives[activeObjective].icon && (\
-                        <objectives[activeObjective].icon className="h-10 w-10 text-white" />
-                      )}
+                      {(() => {
+                        const IconComponent = objectives[activeObjective].icon
+                        return <IconComponent className="h-10 w-10 text-white" />
+                      })()}
                     </div>
                     <CardTitle className="text-2xl">{objectives[activeObjective].title}</CardTitle>
                     <div className="text-lg font-medium text-gray-600">
@@ -400,41 +459,44 @@ export default function MissionPageClient() {
                     title: "Community Engagement",
                     description: "Measuring participation and feedback from community members in our programs",
                     icon: Users,
-                    color: "blue",
+                    color: "blue" as keyof typeof colorClassMap,
                   },
                   {
                     title: "Knowledge Transfer",
                     description: "Assessing changes in awareness and understanding of rights and democratic principles",
                     icon: BookOpen,
-                    color: "emerald",
+                    color: "emerald" as keyof typeof colorClassMap,
                   },
                   {
                     title: "Policy Influence",
                     description: "Tracking changes in policies and practices that protect human rights",
                     icon: Scale,
-                    color: "purple",
+                    color: "purple" as keyof typeof colorClassMap,
                   },
                   {
                     title: "Community Wellbeing",
                     description: "Evaluating improvements in the lives of marginalized and vulnerable groups",
                     icon: Heart,
-                    color: "pink",
+                    color: "pink" as keyof typeof colorClassMap,
                   },
-                ].map((metric, index) => (
-                  <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group">
-                    <CardHeader className="text-center">
-                      <div
-                        className={`w-16 h-16 bg-gradient-to-br from-${metric.color}-500 to-${metric.color}-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
-                      >
-                        {metric.icon && <metric.icon className="h-8 w-8 text-white" />}
-                      </div>
-                      <CardTitle className="text-lg">{metric.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-600 text-sm leading-relaxed">{metric.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
+                ].map((metric, index) => {
+                  const colorClasses = colorClassMap[metric.color]
+                  return (
+                    <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 group">
+                      <CardHeader className="text-center">
+                        <div
+                          className={`w-16 h-16 ${colorClasses.bgGradient} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}
+                        >
+                          <metric.icon className="h-8 w-8 text-white" />
+                        </div>
+                        <CardTitle className="text-lg">{metric.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-600 text-sm leading-relaxed">{metric.description}</p>
+                      </CardContent>
+                    </Card>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -555,19 +617,21 @@ export default function MissionPageClient() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Ethiopian Social Partnership Advocacy",
-            "alternateName": "ESPA",
-            "description": "ESPA is an indigenous non-profit organization committed to advocate on human rights issues, providing service, support and education for all the citizens of Ethiopia and the world.",
-            "url": "https://espa-ethiopia.org",
-            "logo": "https://espa-ethiopia.org/espa-logo.jpg",
-            "foundingLocation": {
+            name: "Ethiopian Social Partnership Advocacy",
+            alternateName: "ESPA",
+            description:
+              "ESPA is an indigenous non-profit organization committed to advocate on human rights issues, providing service, support and education for all the citizens of Ethiopia and the world.",
+            url: "https://espa-ethiopia.org",
+            logo: "https://espa-ethiopia.org/espa-logo.jpg",
+            foundingLocation: {
               "@type": "Place",
-              "name": "Addis Ababa, Ethiopia"
+              name: "Addis Ababa, Ethiopia",
             },
-            "areaServed": "Ethiopia",
-            "knowsAbout": ["Human Rights", "Democratic Education", "Social Advocacy", "Community Development"],
-            "mission": "To diligently advocate for all citizens, educate the public regarding their rights and democracy, and to raise funds to provide holistic assistance including marginalized people groups, women, disabled and oppressed in great need."
-          })
+            areaServed: "Ethiopia",
+            knowsAbout: ["Human Rights", "Democratic Education", "Social Advocacy", "Community Development"],
+            mission:
+              "To diligently advocate for all citizens, educate the public regarding their rights and democracy, and to raise funds to provide holistic assistance including marginalized people groups, women, disabled and oppressed in great need.",
+          }),
         }}
       />
     </div>

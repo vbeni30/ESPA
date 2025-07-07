@@ -4,20 +4,20 @@ import MissionPageClient from "./MissionPageClient"
 export const metadata: Metadata = {
   title: "Our Mission | Ethiopian Social Partnership Advocacy (ESPA)",
   description:
-    "ESPA is committed to ensuring human rights, promoting democratic values, and providing holistic support to marginalized communities through advocacy, education, and service across Ethiopia.",
+    "Learn about ESPA's mission to advocate for human rights, promote democratic values, and provide holistic support to marginalized communities across Ethiopia.",
   keywords:
-    "ESPA mission, human rights Ethiopia, democratic education, social advocacy, marginalized communities, Ethiopian NGO",
+    "ESPA mission, human rights advocacy, democratic education, social justice Ethiopia, community empowerment, Ethiopian NGO",
   openGraph: {
     title: "Our Mission | Ethiopian Social Partnership Advocacy (ESPA)",
     description:
-      "Advocating for human rights, promoting democracy, and empowering communities across Ethiopia through education, advocacy, and service.",
+      "ESPA's mission to advocate for human rights, promote democratic values, and provide holistic support to marginalized communities.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "Our Mission | Ethiopian Social Partnership Advocacy (ESPA)",
-    description: "Advocating for human rights, promoting democracy, and empowering communities across Ethiopia.",
+    description: "Learn about ESPA's mission to advocate for human rights and promote democratic values in Ethiopia.",
   },
   alternates: {
     canonical: "/mission",
