@@ -81,13 +81,6 @@ export default function AboutPage() {
                   <Play className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
                   Watch Our Story
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 text-lg h-auto"
-                >
-                  Download Brochure
-                </Button>
               </div>
             </div>
           </div>
@@ -435,7 +428,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent className="text-center">
                   <p className="text-gray-600 leading-relaxed mb-6">{leader.description}</p>
-                  <Button variant="outline" size="sm" className="group-hover:bg-blue-50">
+                  <Button variant="outline" size="sm" className="group-hover:bg-blue-50 bg-transparent">
                     View Profile
                   </Button>
                 </CardContent>

@@ -296,14 +296,6 @@ export default function GalleryPage() {
                   <Eye className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform" />
                   Explore Gallery
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="bg-white/10 text-white border-white/30 hover:bg-white/20 backdrop-blur-sm px-8 py-4 text-lg h-auto"
-                >
-                  <Download className="h-5 w-5 mr-2" />
-                  Download Media Kit
-                </Button>
               </div>
             </div>
             <div className="relative">

@@ -526,8 +526,8 @@ export default function EventsPage() {
                         key={event.id}
                         className="overflow-hidden border-0 shadow-2xl bg-gradient-to-r from-blue-600 to-blue-700 text-white group hover:shadow-3xl transition-all duration-500"
                       >
-                        <div className="grid lg:grid-cols-2 gap-0">
-                          <div className="relative h-64 lg:h-auto">
+                        <div className="relative">
+                          <div className="relative h-80">
                             <Image
                               src={event.image || "/placeholder.svg"}
                               alt={event.title}
@@ -544,12 +544,13 @@ export default function EventsPage() {
                                 <span className="ml-1 capitalize">{event.status}</span>
                               </Badge>
                             </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                           </div>
-                          <div className="p-8 lg:p-12 flex flex-col justify-center">
+                          <div className="p-8">
                             <Badge className="bg-white/20 text-white w-fit mb-4 capitalize">{event.category}</Badge>
                             <h3 className="text-2xl md:text-3xl font-bold mb-4">{event.title}</h3>
                             <p className="text-blue-100 mb-6 leading-relaxed line-clamp-3">{event.description}</p>
-                            <div className="space-y-3 mb-6">
+                            <div className="space-y-3 mb-8">
                               <div className="flex items-center text-blue-100">
                                 <Calendar className="h-5 w-5 mr-3" />
                                 <span>{event.date}</span>
@@ -569,13 +570,13 @@ export default function EventsPage() {
                                 </span>
                               </div>
                             </div>
-                            <div className="flex gap-3">
+                            <div className="flex flex-col sm:flex-row gap-4">
                               <Dialog>
                                 <DialogTrigger asChild>
                                   <Button
                                     size="lg"
                                     variant="secondary"
-                                    className="bg-white text-blue-600 hover:bg-gray-100"
+                                    className="bg-white text-blue-600 hover:bg-gray-100 flex-1"
                                     onClick={() => setSelectedEvent(event)}
                                   >
                                     View Details
@@ -586,7 +587,7 @@ export default function EventsPage() {
                               <Button
                                 size="lg"
                                 variant="outline"
-                                className="border-white text-white hover:bg-white hover:text-blue-600 bg-transparent"
+                                className="border-white text-white hover:bg-white hover:text-blue-600 bg-transparent flex-1"
                                 disabled={event.status === "full"}
                               >
                                 {event.status === "full" ? "Event Full" : "Register Now"}

@@ -183,13 +183,15 @@ function MobileMenu() {
 
         {/* Sticky Support Button */}
         <div className="pt-4 mt-4 border-t bg-white">
-          <Button
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 h-9 text-sm transition-all duration-300 shadow-md hover:shadow-lg"
-            onClick={() => setIsOpen(false)}
-          >
-            <Heart className="h-3.5 w-3.5 mr-1.5" />
-            Support Us
-          </Button>
+          <Link href="/donate">
+            <Button
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 h-9 text-sm transition-all duration-300 shadow-md hover:shadow-lg"
+              onClick={() => setIsOpen(false)}
+            >
+              <Heart className="h-3.5 w-3.5 mr-1.5" />
+              Support Us
+            </Button>
+          </Link>
         </div>
       </SheetContent>
     </Sheet>
@@ -452,10 +454,12 @@ function Navigation() {
         {/* Right side actions */}
         <div className="flex items-center space-x-3">
           <MobileMenu />
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 h-9 text-sm transition-all duration-300 shadow-md hover:shadow-lg">
-            <Heart className="h-3.5 w-3.5 mr-1.5" />
-            Support Us
-          </Button>
+          <Link href="/donate">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 h-9 text-sm transition-all duration-300 shadow-md hover:shadow-lg">
+              <Heart className="h-3.5 w-3.5 mr-1.5" />
+              Support Us
+            </Button>
+          </Link>
         </div>
       </div>
     </header>
